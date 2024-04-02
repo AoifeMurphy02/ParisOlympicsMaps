@@ -62,8 +62,12 @@
             mapId: "MY_MAP_ID",
             zoom: 6,
             center: new google.maps.LatLng(46.2276, 2.2137), // Center of france
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControlOptions: {
+                        mapTypeIds: ["satellite", "roadmap",  "hidePoi"]
+                    }
         });
+        hidePointsOfInterest(map)
 
         const infoWindow = new google.maps.InfoWindow();
 
@@ -96,6 +100,20 @@
             })
             .catch(error => console.error('Error loading JSON:', error));
     }
+    function hidePointsOfInterest(map)
+            {
+                let styles = [
+                    {
+                        "featureType": "poi",
+                        "stylers": [{"visibility": "off"}]
+                    }
+                ]
+
+                let styledMapType = new google.maps.StyledMapType(styles, {name: "Hide Points of Interest", alt: "Hide Points of Interest"})
+                map.mapTypes.set("hidePoi", styledMapType)
+                
+                map.setMapTypeId("hidePoi")
+            }
 </script>
     </head> 
 
