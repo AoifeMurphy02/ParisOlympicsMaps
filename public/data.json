@@ -1,0 +1,259 @@
+{"locations":[
+    {
+        "title": "Roland-Garros Stadium",
+        "image": "images/Roland-Garros-Stadium.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8460,
+        "longitude": 2.2538
+    },
+    {
+        "title": "Parc des Princes",
+        "image": "images/Parc-des-Princes.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8414,
+        "longitude": 2.2530
+    },
+    {
+        "title": "Eiffel Tower Stadium",
+        "image": "images/Eiffel-Tower-Stadium.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.854335,
+        "longitude": 2.300452
+    },
+    {
+        "title": "Alexandre III Bridge",
+        "image": "images/Alexandre-Bridge.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8639,
+        "longitude": 2.3136
+    },
+    {
+        "title": "Invalides",
+        "image": "images/Invalides.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8565,
+        "longitude": 2.3127
+    },
+    {
+        "title": "La Concorde Stadium",
+        "image": "images/La-Concorde-Stadium.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.865608,
+        "longitude": 2.321038
+    },
+    {
+        "title": "Bercy Arena",
+        "image": "images/BercyArena.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.838703,
+        "longitude": 2.377946
+    },
+    {
+        "title": "Porte de la Chapelle Arena",
+        "image": "",
+        "content": "",
+        "website": "",
+        "latitude": 48.8994,
+        "longitude": 2.3605
+    },
+    {
+        "title": "Paris Aquatique Center",
+        "image": "images/aquatics.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.9236,
+        "longitude": 2.3556
+    },
+    {
+        "title": "Bordeaux Stadium",
+        "image": "images/BordeauxStadium.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 44.8974,
+        "longitude": 0.5616
+    },
+    {
+        "title": "Champ de Mars Arena",
+        "image": "images/Champ-de-Mars-Arena.webp",
+        "content": "",
+        "website": "",
+        "latitude": 48.8529,
+        "longitude": 2.3028
+    },
+    {
+        "title": "Château de Versailles",
+        "image": "images/Château-de-Versailles.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.804722,
+        "longitude": 2.121782
+    },
+    {
+        "title": "Chateauroux Shooting Centre",
+        "image": "images/Chateauroux-Shooting-Centre.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 46.82389,
+        "longitude": 1.75722
+    },
+    {
+        "title": "Elancourt Hill",
+        "image": "images/ElancourtHill.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.782907,
+        "longitude": 1.960077
+    },
+    {
+        "title": "Geoffroy-Guichard Stadium",
+        "image": "images/ggs.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 45.4605,
+        "longitude": 4.3894
+    },
+    {
+        "title": "Grand Palais",
+        "image": "images/grandPalais.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8661,
+        "longitude": 2.3125
+    },
+    {
+        "title": "Hôtel de Ville",
+        "image": "images/hoteldeville.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8565,
+        "longitude": 2.3524
+    },
+    {
+        "title": "La Beaujoire Stadium",
+        "image": "images/LaBeaujoire.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 47.256,
+        "longitude": -1.525
+    },
+    {
+        "title": "Parc Urbain La Concorde",
+        "image": "images/ParcUrbainLaConcorde.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.865633,
+        "longitude": 2.321236
+    },
+    {
+        "title": "Le Bourget",
+        "image": "images/lebourget.webp",
+        "content": "",
+        "website": "",
+        "latitude": 48.9373,
+        "longitude": 2.4201
+    },
+    {
+        "title": "Golf National",
+        "image": "images/nationalGolf.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.754559,
+        "longitude": 2.076024
+    },
+    {
+        "title": "Lyon Stadium",
+        "image": "images/LyonStadium.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 45.765278,
+        "longitude": 4.981944
+    },
+    {
+        "title": "Marseille Marina",
+        "image": "images/marina.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 43.2942,
+        "longitude": 5.3672
+    },
+    {
+        "title": "Marseille Stadium",
+        "image": "images/marseilleStadium.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 43.2699,
+        "longitude": 5.3959
+    },
+    {
+        "title": "Nice Stadium",
+        "image": "images/niceStadium.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 43.7051,
+        "longitude": 7.1926
+    },
+    {
+        "title": "North Paris Arena",
+        "image": "images/northParis.jpeg",
+        "content": "",
+        "website": "",
+        "latitude": 48.895226,
+        "longitude": 2.229182
+    },
+    {
+        "title": "Paris La Defense Arena",
+        "image": "images/laDefense.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8947,
+        "longitude": 2.2297
+    },
+    {
+        "title": "Pierre Mauroy Stadium",
+        "image": "images/Pierre-Mauroy.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 50.6119,
+        "longitude": 3.1305
+    },
+    {
+        "title": "Porte de la Chapelle Arena",
+        "image": "images/Porte-de-la-Chapelle.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8994,
+        "longitude": 2.3605
+    },
+    {
+        "title": "Saint-Quentin-en-Yvelines BMX Stadium",
+        "image": "images/Saint-Quentin.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.7862,
+        "longitude": 2.0342
+    },
+    {
+        "title": "Saint-Quentin-en-Yvelines Velodrome",
+        "image": "images/Saint-Quentin-en-Yvelines.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.7880,
+        "longitude": 2.0349
+    },
+    {
+        "title": "South Paris Arena",
+        "image": "images/SouthParisArena.jpg",
+        "content": "",
+        "website": "",
+        "latitude": 48.8314,
+        "longitude": 2.2896
+    }
+]
+}

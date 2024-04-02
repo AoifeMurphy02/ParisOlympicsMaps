@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Course notes example code</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+           #map
+            {
+                width:650px;
+                height:650px;
+                border:thin solid #ccc;
+            
+            }
+
+            @keyframes drop 
+            {
+                0% 
+                {
+                    transform: translateY(-200px);
+                }
+                50% 
+                {
+                    transform: translateY(0px);
+                }
+                70% 
+                {
+                    transform: translateY(-25px);
+                }
+                100% 
+                {
+                    transform: translateY(0px);
+                }
+            }     
+
+            #content
+            {
+                width:300px;
+                height:200px;
+             
+            }
+
+            #content img
+            {
+                clear:both;
+                float:left;
+                width: 150px;
+                
+                border-radius:100px;
+                margin: 20px;
+                margin-top:0px;
+                border:thin solid #CCC;
+            }
+            
+
+        </style>        
+  
+  <script>
+    function loadMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            mapId: "MY_MAP_ID",
+            zoom: 5,
+            center: new google.maps.LatLng(48.8566, 2.3522), // Center of Paris
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        const infoWindow = new google.maps.InfoWindow();
+
+        fetch('data.json') 
+            .then(response => response.json())
+            .then(data => {
+                data.locations.forEach(location => {
+                    const marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(location.latitude, location.longitude),
+                        map: map,
+                        title: location.title
+                    });
+
+                    google.maps.event.addListener(marker, "click", () => {
+                        infoWindow.setContent(`<div id="content">
+                            <h1>${location.title}</h1>
+                            <div id="content">
+                                <img src="${location.image}">
+                                <p>${location.content}</p>
+                                <p>For more information, see our website<br><a href="${location.website}">website</a></p>
+                            </div>
+                        </div>`);
+                        infoWindow.open(map, marker);
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+    }
+</script>
+    </head> 
+
+    <body>
+        <div id=map></div>    
+        
+        <!-- Google Maps -->
+        <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=marker></script>       		
+    </body>
+</html> 
