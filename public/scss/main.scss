@@ -1,0 +1,65 @@
+$header-background-color: #4d43c0;
+$header-text-color: #f30808;
+$header-padding: 40px;
+
+.header {
+  background-color: $header-background-color;
+  color: $header-text-color;
+  padding: $header-padding;
+  border-radius: 20px; 
+  display: flex; 
+  align-items: center;
+  
+  .logo {
+    border-radius: 50%; 
+  width: 100px; 
+  height: 100px;
+    margin-right: 10px;
+    
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+ 
+  }
+
+ 
+}
+#map {
+    width: 750px;
+    height: 650px;
+    border: thin solid #ccc;
+    margin: 0 auto;
+  }
+  
+  @keyframes drop {
+    0% {
+      transform: translateY(-200px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
+    70% {
+      transform: translateY(-25px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  #content {
+    width: 300px;
+    height: 200px;
+  }
+  
+  #content img {
+    clear: both;
+    float: left;
+    width: 150px;
+    border-radius: 100px;
+    margin: 20px;
+    margin-top: 0px;
+    border: thin solid #ccc;
+  }
+  
