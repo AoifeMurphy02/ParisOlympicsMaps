@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html> 
     <head>
-        <title>Course notes example code</title>
+        <title>Paris Olympic Games Maps</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -60,8 +60,8 @@
     function loadMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
             mapId: "MY_MAP_ID",
-            zoom: 5,
-            center: new google.maps.LatLng(48.8566, 2.3522), // Center of Paris
+            zoom: 6,
+            center: new google.maps.LatLng(46.2276, 2.2137), // Center of france
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -74,7 +74,11 @@
                     const marker = new google.maps.Marker({
                         position: new google.maps.LatLng(location.latitude, location.longitude),
                         map: map,
-                        title: location.title
+                        title: location.title,
+                        icon: {
+                                url: 'https://nbcsportsgrouppressbox.com/wp-content/uploads/sites/24/2023/06/NBC_PARIS2024_RGB_FRAMED_POSITIVE.png?w=316', // Custom pin icon URL
+                                scaledSize: new google.maps.Size(60, 60) 
+                            }
                     });
 
                     google.maps.event.addListener(marker, "click", () => {
