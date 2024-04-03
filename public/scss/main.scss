@@ -29,8 +29,7 @@ body {
 }
 
 #map {
-    width: 750px;
-    height: 650px;
+
     border: thin solid #ccc;
     margin: 0 auto;
 }
@@ -94,8 +93,8 @@ body {
     }
   
     #map {
-        width: 90%; 
-        height: 300px;
+        width: 80%; 
+        height: 700px;
         margin: 0 auto;
     }
   
@@ -130,16 +129,11 @@ body {
 
     #map {
      
-        width: 90%; 
-        height: 500px;
+        width: 80%; 
+        height: 600px;
         margin: 0 auto;
     }
-
-   
-
-  
-
-    
+ 
 }
 /* Media query 1001px + */
 @media screen and (min-width: 1001px) {
@@ -162,8 +156,8 @@ body {
 
     #map {
      
-        width: 90%; 
-        height: 500px;
+        width: 80%; 
+        height: 600px;
         margin: 0 auto;
     }
 

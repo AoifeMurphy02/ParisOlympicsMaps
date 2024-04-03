@@ -1,82 +1,152 @@
 <!DOCTYPE html>
 <html> 
-    <head>
-        <title>Paris Olympic Games Maps</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="scss/main.css">
-       
-  <script>
-    function loadMap() {
-        const map = new google.maps.Map(document.getElementById("map"), {
-            mapId: "MY_MAP_ID",
-            zoom: 6,
-            center: new google.maps.LatLng(46.2276, 2.2137), // Center of france
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            mapTypeControlOptions: {
-                        mapTypeIds: ["satellite", "roadmap",  "hidePoi"]
-                    }
-        });
-        hidePointsOfInterest(map)
-
-        const infoWindow = new google.maps.InfoWindow();
-
-        fetch('data.json') 
-            .then(response => response.json())
-            .then(data => {
-                data.locations.forEach(location => {
-                    const marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(location.latitude, location.longitude),
-                        map: map,
-                        title: location.title,
-                        icon: {
-                                url: 'https://nbcsportsgrouppressbox.com/wp-content/uploads/sites/24/2023/06/NBC_PARIS2024_RGB_FRAMED_POSITIVE.png?w=316', // Custom pin icon URL
-                                scaledSize: new google.maps.Size(60, 60) 
-                            }
-                    });
-
-                    google.maps.event.addListener(marker, "click", () => {
-                        infoWindow.setContent(`<div id="content">
-                            <h1>${location.title}</h1>
-                            <div id="content">
-                                <img src="${location.image}">
-                                <p>${location.content}</p>
-                                <p>For more information, see our website<br><a href="${location.website}">website</a></p>
-                            </div>
-                        </div>`);
-                        infoWindow.open(map, marker);
-                    });
-                });
-            })
-            .catch(error => console.error('Error loading JSON:', error));
-    }
-    function hidePointsOfInterest(map)
-            {
-                let styles = [
-                    {
-                        "featureType": "poi",
-                        "stylers": [{"visibility": "off"}]
-                    }
-                ]
-
-                let styledMapType = new google.maps.StyledMapType(styles, {name: "Hide Points of Interest", alt: "Hide Points of Interest"})
-                map.mapTypes.set("hidePoi", styledMapType)
-                
-                map.setMapTypeId("hidePoi")
-            }
-</script>
-    </head> 
+<head>
+    <title>Paris Olympic Games Maps</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="scss/main.css">
    
-    <body>
-        <div class="header">
-            <img src="images/logo.png" alt="Logo" class="logo">
-            <h1>Olympic Games Maps</h1>
-        </div>
 
-        <div id=map></div>    
+    <script>
+        let map = null;
+        let placeType = null;
+        let cafeMarkers = []; // array for the cafes 
+        let museumMarkers = [];// array for the museums
+
+        function loadMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                mapId: "MY_MAP_ID",
+                zoom: 6,
+                center: new google.maps.LatLng(48.86, 2.35), // Center of Paris
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControlOptions: {
+                    mapTypeIds: ["satellite", "roadmap", "hidePoi"]
+                },
+            });
+            hidePointsOfInterest(map);
+            performNearbySearch();
+        }
+
+        function performNearbySearch() {
+            // Clear existing markers
+            clearMarkers();
+
+            const service = new google.maps.places.PlacesService(map);
+            const servicesCentreLocation = { lat: 48.86, lng: 2.35 }; // Center of Paris 
+
+            service.nearbySearch({
+                location: servicesCentreLocation,
+                radius: 999990, // radius in meters
+                type: placeType
+            }, getNearbyMarkers);
+
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    data.locations.forEach(location => {
+                        createMarker(location);
+                    });
+                })
+                .catch(error => console.error('Error loading JSON:', error));
+        }
+
+        function getNearbyMarkers(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                results.forEach(result => {
+                    if (placeType === "cafe") {
+                        createCafeMarker(result);
+                    } else if (placeType === "museum") {
+                        createMuseumMarker(result);
+                    }
+                });
+            }
+        }
+
+        function createMarker(place) {
+            // Create marker for each location from JSON
+            const marker = new google.maps.Marker({
+                position: new google.maps.LatLng(place.latitude, place.longitude),
+                map: map,
+                title: place.title,
+                icon: {
+                    url: 'https://nbcsportsgrouppressbox.com/wp-content/uploads/sites/24/2023/06/NBC_PARIS2024_RGB_FRAMED_POSITIVE.png?w=316',
+                    scaledSize: new google.maps.Size(60, 60) 
+                }
+            });
+        }
+
+        function createCafeMarker(place) {
+            // Create marker for cafe
+            const marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.name,
+                icon: {
+                    url: 'https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png',
+                    scaledSize: new google.maps.Size(30, 30) 
+                }
+            });
+            cafeMarkers.push(marker); // Add marker to cafeMarkers array
+        }
+
+        function createMuseumMarker(place) {
+            // Create marker for museum
+            const marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.name,
+                icon: {
+                    url: 'https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png',
+                    scaledSize: new google.maps.Size(30, 30) 
+                }
+            });
+            museumMarkers.push(marker); // Add marker to museumMarkers array
+        }
+
+        function hidePointsOfInterest(map) {
+            let styles = [
+                {
+                    "featureType": "poi",
+                    "stylers": [{"visibility": "off"}]
+                }
+            ];
+
+            let styledMapType = new google.maps.StyledMapType(styles, {name: "Hide Points of Interest", alt: "Hide Points of Interest"});
+            map.mapTypes.set("hidePoi", styledMapType);
+            map.setMapTypeId("hidePoi");
+        }
+
+        function clearMarkers() {
+            // Clear cafe markers
+            cafeMarkers.forEach(marker => marker.setMap(null));
+            cafeMarkers = [];
+            // Clear museum markers
+            museumMarkers.forEach(marker => marker.setMap(null));
+            museumMarkers = [];
+        }
+
+        function switchPlaceType(newType) {
+            placeType = newType;
+            performNearbySearch();
+        }
+    </script>
+</head> 
+
+<body>
+    <div class="header">
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <h1>Olympic Games Maps</h1>
+    </div>
+   <label for="cafe">Cafes:</label>
+    <input name="placeType" id="cafe" type="radio" value="cafe" onclick="switchPlaceType('cafe');">
+    
+    <label for="museum">Museums:</label>
+    <input name="placeType" id="museum" type="radio" value="museum" onclick="switchPlaceType('museum');">
+            
+    <div id=map></div>    
         
         <!-- Google Maps -->
-        <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=marker></script>       		
+        <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=marker,places></script>       		
     </body>
     <footer class="footer"><p>&copy; Paris Olympic Games</p></footer>
 </html> 
