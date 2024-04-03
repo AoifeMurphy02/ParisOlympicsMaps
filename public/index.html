@@ -11,11 +11,12 @@
         let placeType = null;
         let cafeMarkers = []; // array for cafes
         let museumMarkers = []; // array for museums
-
+        let barMarkers=[];
+        let  restaurantMarkers = [];
         function loadMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 mapId: "MY_MAP_ID",
-                zoom: 6,
+                zoom: 11.5,
                 center: new google.maps.LatLng(48.86, 2.35), // Center of Paris
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControlOptions: {
@@ -56,6 +57,11 @@
                         createCafeMarker(result);
                     } else if (placeType === "museum") {
                         createMuseumMarker(result);
+                    }else if (placeType === "bar") {
+                        createBarMarker(result);
+                    }
+                    else if (placeType === "restaurant") {
+                       createRestaurantMarker(result);
                     }
                 });
             }
@@ -69,7 +75,7 @@
                 title: place.title,
                 icon: {
                     url: 'https://nbcsportsgrouppressbox.com/wp-content/uploads/sites/24/2023/06/NBC_PARIS2024_RGB_FRAMED_POSITIVE.png?w=316',
-                    scaledSize: new google.maps.Size(60, 60)
+                    scaledSize: new google.maps.Size(50, 50)
                 }
             });
 
@@ -121,7 +127,7 @@
                 title: place.name,
                 icon: {
                     url: 'https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png',
-                    scaledSize: new google.maps.Size(30, 30)
+                    scaledSize: new google.maps.Size(20, 20)
                 }
             });
             museumMarkers.push(marker); // Add marker to museumMarkers array
@@ -137,7 +143,56 @@
                 infoWindow.open(map, marker);
             });
         }
+        function createBarMarker(place) {
+            // Create marker for shps
+            const marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.name,
+                icon: {
+                    url: 'http://maps.gstatic.com/mapfiles/ms2/micons/bar.png',
+                    scaledSize: new google.maps.Size(20, 20)
+                }
+            });
+            barMarkers.push(marker); // Add marker to barMarkers array
 
+            google.maps.event.addListener(marker, "click", () => {
+                const infoWindow = new google.maps.InfoWindow();
+                infoWindow.setContent(`<div id="content">
+                    <h1>${place.name}</h1>
+                    <div id="content">
+                        <p>Address: ${place.vicinity}</p>
+                        <p>Rating: ${place.rating}</p>
+                    </div>
+                </div>`);
+                infoWindow.open(map, marker);
+            });
+        }
+        function createRestaurantMarker(place) {
+            // Create marker for shps
+            const marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.name,
+                icon: {
+                    url: 'http://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png',
+                    scaledSize: new google.maps.Size(20, 20)
+                }
+            });
+            restaurantMarkers.push(marker); // Add marker to barMarkers array
+
+            google.maps.event.addListener(marker, "click", () => {
+                const infoWindow = new google.maps.InfoWindow();
+                infoWindow.setContent(`<div id="content">
+                    <h1>${place.name}</h1>
+                    <div id="content">
+                        <p>Address: ${place.vicinity}</p>
+                        <p>Rating: ${place.rating}</p>
+                    </div>
+                </div>`);
+                infoWindow.open(map, marker);
+            });
+        }
         function hidePointsOfInterest(map) {
             let styles = [
                 {
@@ -158,6 +213,12 @@
             // Clear museum markers
             museumMarkers.forEach(marker => marker.setMap(null));
             museumMarkers = [];
+            // Clear bar markers
+            barMarkers.forEach(marker => marker.setMap(null));
+            barMarkers = [];
+
+            restaurantMarkers.forEach(marker => marker.setMap(null));
+            restaurantMarkers = [];
         }
 
         function switchPlaceType(newType) {
@@ -177,6 +238,10 @@
     <input name="placeType" id="cafe" type="radio" value="cafe" onclick="switchPlaceType('cafe');">
     <label for="museum">Museums:</label>
     <input name="placeType" id="museum" type="radio" value="museum" onclick="switchPlaceType('museum');">
+    <label for="bar">Bars:</label>
+    <input name="placeType" id="bar" type="radio" value="bar" onclick="switchPlaceType('bar');">
+    <label for="restaurant">Restaurants:</label>
+    <input name="placeType" id="restaurant" type="radio" value="restaurant" onclick="switchPlaceType('restaurant');">
 </div>      
     <div id=map></div>    
         
