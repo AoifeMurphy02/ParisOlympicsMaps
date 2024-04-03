@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="scss/main.css">
-   
-
+    
     <script>
-        let map = null;
+         let map = null;
         let placeType = null;
-        let cafeMarkers = []; // array for the cafes 
-        let museumMarkers = [];// array for the museums
+        let cafeMarkers = []; // array for cafes
+        let museumMarkers = []; // array for museums
 
         function loadMap() {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -70,8 +69,21 @@
                 title: place.title,
                 icon: {
                     url: 'https://nbcsportsgrouppressbox.com/wp-content/uploads/sites/24/2023/06/NBC_PARIS2024_RGB_FRAMED_POSITIVE.png?w=316',
-                    scaledSize: new google.maps.Size(60, 60) 
+                    scaledSize: new google.maps.Size(60, 60)
                 }
+            });
+
+            google.maps.event.addListener(marker, "click", () => {
+                const infoWindow = new google.maps.InfoWindow();
+                infoWindow.setContent(`<div id="content">
+                    <h1>${place.title}</h1>
+                    <div id="content">
+                        <img src="${place.image}">
+                        <p>${place.content}</p>
+                        <p>For more information, see our website<br><a href="${place.website}">website</a></p>
+                    </div>
+                </div>`);
+                infoWindow.open(map, marker);
             });
         }
 
@@ -83,10 +95,22 @@
                 title: place.name,
                 icon: {
                     url: 'https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png',
-                    scaledSize: new google.maps.Size(30, 30) 
+                    scaledSize: new google.maps.Size(30, 30)
                 }
             });
             cafeMarkers.push(marker); // Add marker to cafeMarkers array
+
+            google.maps.event.addListener(marker, "click", () => {
+                const infoWindow = new google.maps.InfoWindow();
+                infoWindow.setContent(`<div id="content">
+                    <h1>${place.name}</h1>
+                    <div id="content">
+                        <p>Address: ${place.vicinity}</p>
+                        <p>Rating: ${place.rating}</p>
+                    </div>
+                </div>`);
+                infoWindow.open(map, marker);
+            });
         }
 
         function createMuseumMarker(place) {
@@ -97,10 +121,21 @@
                 title: place.name,
                 icon: {
                     url: 'https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png',
-                    scaledSize: new google.maps.Size(30, 30) 
+                    scaledSize: new google.maps.Size(30, 30)
                 }
             });
             museumMarkers.push(marker); // Add marker to museumMarkers array
+        google.maps.event.addListener(marker, "click", () => {
+                const infoWindow = new google.maps.InfoWindow();
+                infoWindow.setContent(`<div id="content">
+                    <h1>${place.name}</h1>
+                    <div id="content">
+                        <p>Address: ${place.vicinity}</p>
+                        <p>Rating: ${place.rating}</p>
+                    </div>
+                </div>`);
+                infoWindow.open(map, marker);
+            });
         }
 
         function hidePointsOfInterest(map) {
@@ -135,14 +170,14 @@
 <body>
     <div class="header">
         <img src="images/logo.png" alt="Logo" class="logo">
-        <h1>Olympic Games Maps</h1>
+       <!-- <h1 >Olympic Games Maps</h1> -->
     </div>
+    <div class="radio">
    <label for="cafe">Cafes:</label>
     <input name="placeType" id="cafe" type="radio" value="cafe" onclick="switchPlaceType('cafe');">
-    
     <label for="museum">Museums:</label>
     <input name="placeType" id="museum" type="radio" value="museum" onclick="switchPlaceType('museum');">
-            
+</div>      
     <div id=map></div>    
         
         <!-- Google Maps -->

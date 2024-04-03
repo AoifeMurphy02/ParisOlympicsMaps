@@ -8,17 +8,19 @@ body {
 }
 
 .header {
-    background-color: $header-background-color;
+    background-color: #fff;
     color: $header-text-color;
     padding: $header-padding;
+    border-bottom: 1px solid $header-background-color;
     display: flex;  
     width: 100%;
     align-items: center;
   
     .logo {
+        
         border-radius: 50%; 
-        width: 70px; 
-        height: 70px;
+        width: 90px; 
+        height: 90px;
         margin-right: 10px;
     }
 
@@ -27,11 +29,19 @@ body {
         font-size: 24px;
     }
 }
+.radio{
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+  
+    
+}
 
 #map {
 
     border: thin solid #ccc;
     margin: 0 auto;
+    
 }
   
 @keyframes drop {
@@ -68,7 +78,7 @@ body {
     background-color: $header-background-color;
     color: $header-text-color;
     text-align: center;
-    padding: 3px;
+    padding: 2px;
     position: fixed;
     bottom: 0;
     left: 0;
