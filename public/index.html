@@ -101,7 +101,7 @@
                 title: place.name,
                 icon: {
                     url: 'https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png',
-                    scaledSize: new google.maps.Size(30, 30)
+                    scaledSize: new google.maps.Size(20, 20)
                 }
             });
             cafeMarkers.push(marker); // Add marker to cafeMarkers array
@@ -230,9 +230,19 @@
 
 <body>
     <div class="header">
-        <img src="images/logo.png" alt="Logo" class="logo">
-       <!-- <h1 >Olympic Games Maps</h1> -->
+        <div class="background-image">
+            <img src="images/background.jpg" alt="background" class="background">
+        </div>
+        <!--<img src="images/logo.png" alt="Logo" class="logo">-->
+        <!-- <h1 >Olympic Games Maps</h1> -->
     </div>
+
+    <div id="scroll-container">
+    <div id="scroll-text">
+        <span class="moving-text">Paris Olympic Games runs from Friday, Jul 26, 2024 to Sunday, Aug 11, 2024.</span>
+    </div>
+</div>
+      
     <div class="radio">
    <label for="cafe">Cafes:</label>
     <input name="placeType" id="cafe" type="radio" value="cafe" onclick="switchPlaceType('cafe');">
@@ -242,11 +252,15 @@
     <input name="placeType" id="bar" type="radio" value="bar" onclick="switchPlaceType('bar');">
     <label for="restaurant">Restaurants:</label>
     <input name="placeType" id="restaurant" type="radio" value="restaurant" onclick="switchPlaceType('restaurant');">
-</div>      
+</div> 
+
+<div class="space-above-map"></div> 
     <div id=map></div>    
         
         <!-- Google Maps -->
         <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=marker,places></script>       		
+    
+        <div class="space-under-map"></div> 
     </body>
     <footer class="footer"><p>&copy; Paris Olympic Games</p></footer>
 </html> 

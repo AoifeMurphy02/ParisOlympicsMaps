@@ -8,25 +8,22 @@ body {
 }
 
 .header {
-    background-color: #fff;
-    color: $header-text-color;
-    padding: $header-padding;
-    border-bottom: 1px solid $header-background-color;
-    display: flex;  
-    width: 100%;
-    align-items: center;
-  
-    .logo {
-        
-        border-radius: 50%; 
-        width: 55px; 
-        height: 55px;
-        margin-right: 10px;
+    position: relative; 
+    height: 300px; 
+
+    .background-image {
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; 
     }
 
-    h1 {
-        margin: 0;
-        font-size: 24px;
+    .background-image .background {
+        width: 100%; 
+        height: 100%;
+        object-fit: cover; 
     }
 }
 .radio{
@@ -34,19 +31,51 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-   padding-bottom: 5px;
+   padding-bottom: 25px;
    border-bottom: 1px solid $header-background-color;
-width: 100%;
+
+
     
 }
 
 #map {
-
+padding-top: 20;
     border: thin solid #ccc;
     margin: 0 auto;
     
 }
+
+#scroll-container {
   
+    overflow: hidden;
+    border-bottom: 1px solid $header-background-color;
+    background-color: $header-text-color;
+    color: #fff;
+}
+
+#scroll-text {
+   
+    width: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+
+    .moving-text {
+        // Apply animation only to this text 
+        display: inline-block; 
+        animation: my-animation 15s linear infinite;
+    }
+}
+
+@keyframes my-animation {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 @keyframes drop {
     0% {
         transform: translateY(-200px);
@@ -87,12 +116,15 @@ width: 100%;
     left: 0;
     width: 100%;
 }
+.space-under-map {
+    height: 100px; 
+}
 
 // Media query for mobile phones
 @media screen and (max-width: 500px) {
     .header {
         flex-direction: column;
-        align-items: flex-start; /* Align items to the left */
+        align-items: flex-start; 
         padding: 20px;
     }
   
@@ -106,6 +138,7 @@ width: 100%;
     }
   
     #map {
+        padding-top: 20;
         width: 80%; 
         height: 700px;
         margin: 0 auto;
@@ -127,8 +160,11 @@ width: 100%;
         justify-content: center;
        padding-bottom: 5px;
        border-bottom: 1px solid $header-background-color;
-    width: 100%;
+        width: 100%;
         
+    }
+    .space-under-map {
+        height: 100px; 
     }
     
 }
@@ -152,7 +188,7 @@ width: 100%;
     }
 
     #map {
-     
+        padding-top: 20;
         width: 80%; 
         height: 600px;
         margin: 0 auto;
@@ -166,6 +202,9 @@ width: 100%;
        border-bottom: 1px solid $header-background-color;
     width: 100%;
         
+    }
+    .space-under-map {
+        height: 100px; 
     }
 }
 /* Media query 1001px + */
@@ -188,10 +227,10 @@ width: 100%;
     }
 
     #map {
-     
+        padding-top: 20;
         width: 80%; 
         height: 600px;
-        margin: 0 auto;
+        margin: auto;
     }  
     .radio{
         padding-top: 5px;
@@ -202,5 +241,14 @@ width: 100%;
        border-bottom: 1px solid $header-background-color;
     width: 100%;
         
+    }
+    #scroll-text {
+        width: 100%; 
+    }
+    .space-under-map {
+        height: 100px; 
+    }
+    .space-above-map {
+        height: 25px; 
     }
 }
