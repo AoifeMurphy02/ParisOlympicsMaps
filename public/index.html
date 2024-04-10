@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html> 
 <head>
+    
     <title>Paris Olympic Games Maps</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="scss/main.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     
     <script>
-         let map = null;
-        let placeType = null;
-        let cafeMarkers = []; // array for cafes
-        let museumMarkers = []; // array for museums
-        let barMarkers=[];
-        let  restaurantMarkers = [];
+        let map = null;
+        let placeType = []; // Change to an array to store multiple types
+        let markers = [];
+
         function loadMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 mapId: "MY_MAP_ID",
                 zoom: 11.5,
-                center: new google.maps.LatLng(48.86, 2.35), // Center of Paris
+                center: new google.maps.LatLng(48.86, 2.35),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControlOptions: {
                     mapTypeIds: ["satellite", "roadmap", "hidePoi"]
@@ -28,232 +30,79 @@
         }
 
         function performNearbySearch() {
-            // Clear existing markers
             clearMarkers();
-
             const service = new google.maps.places.PlacesService(map);
-            const servicesCentreLocation = { lat: 48.86, lng: 2.35 }; // Center of Paris 
+            const servicesCentreLocation = { lat: 48.86, lng: 2.35 };
 
-            service.nearbySearch({
-                location: servicesCentreLocation,
-                radius: 999990, // radius in meters
-                type: placeType
-            }, getNearbyMarkers);
-
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.locations.forEach(location => {
-                        createMarker(location);
-                    });
-                })
-                .catch(error => console.error('Error loading JSON:', error));
+            placeType.forEach(type => {
+                service.nearbySearch({
+                    location: servicesCentreLocation,
+                    radius: 1900,
+                    type: type
+                }, getNearbyMarkers);
+            });
         }
 
         function getNearbyMarkers(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 results.forEach(result => {
-                    if (placeType === "cafe") {
-                        createCafeMarker(result);
-                    } else if (placeType === "museum") {
-                        createMuseumMarker(result);
-                    }else if (placeType === "bar") {
-                        createBarMarker(result);
-                    }
-                    else if (placeType === "restaurant") {
-                       createRestaurantMarker(result);
-                    }
+                    createMarker(result);
                 });
             }
         }
 
         function createMarker(place) {
-            // Create marker for each location from JSON
-            const marker = new google.maps.Marker({
-                position: new google.maps.LatLng(place.latitude, place.longitude),
-                map: map,
-                title: place.title,
-                icon: {
-                    url: 'https://nbcsportsgrouppressbox.com/wp-content/uploads/sites/24/2023/06/NBC_PARIS2024_RGB_FRAMED_POSITIVE.png?w=316',
-                    scaledSize: new google.maps.Size(50, 50)
-                }
-            });
+    let service = new google.maps.places.PlacesService(map);
+    const iconUrl = getIconURL(place.types); // Call getIconURL function with place.types
+    const marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map: map,
+        title: place.name,
+        icon: {
+            url: iconUrl, // Use the icon URL returned by getIconURL
+            scaledSize: new google.maps.Size(20, 20)
+        }
+    });
+    markers.push(marker);
 
-            google.maps.event.addListener(marker, "click", () => {
-                const infoWindow = new google.maps.InfoWindow();
-                infoWindow.setContent(`<div id="content">
-                    <h1 class="info-window-title">${place.title}</h1>
-                    
-                        <img src="${place.image}">
-                        <p>${place.content}</p>
-                        <p>For more information: <a href="${place.website}">website</a></p>
-                   
-                </div>`);
-                infoWindow.open(map, marker);
-            });
+    google.maps.event.addListener(marker, "click", () => {
+        let photo = null;
+        if (typeof (place.photos) !== "undefined") {
+            photo = place.photos[0].getUrl();
         }
 
-        function createCafeMarker(place) {
-            // Create marker for cafe
-            let service = new google.maps.places.PlacesService(map);
-            const marker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: place.name,
-                icon: {
-                    url: 'https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png',
-                    scaledSize: new google.maps.Size(20, 20)
-                }
-            });
-            cafeMarkers.push(marker); // Add marker to cafeMarkers array
+        const infoWindow = new google.maps.InfoWindow();
+        const content = `<div id="content">
+                            <h1 class="info-window-title">${place.name}</h1>
+                            ${photo ? `<img src="${photo}" width="100px">` : ''}
+                            <p>${place.vicinity}</p>
+                            <p>${place.phone}</p>
+                            <p>For more information: <a href="${place.website}">website</a></p>
+                        </div>`;
+        infoWindow.setContent(content);
+        infoWindow.open(map, marker);
+    });
+}
 
-            infoWindow = new google.maps.InfoWindow()
 
-google.maps.event.addListener(marker, "click", () =>
-{
-    let photo = null
-                    if (typeof (place.photos) !== "undefined") // there is at least one photo
-                    {
-                        photo = place.photos[0].getUrl()
-                    }
+function getIconURL(types) {
+    if (types.includes('cafe')) {
+        return 'https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png';
+    }
+    if (types.includes('museum')) {
+        return 'https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png';
+    }
+    if (types.includes('bar')) {
+        return 'http://maps.gstatic.com/mapfiles/ms2/micons/bar.png';
+    }
+    if (types.includes('restaurant')) {
+        return 'http://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png';
+    }
+    // Default icon if no place type matches
+    return '';
+}
 
-                    request = {
-                        placeId: place.place_id,
-                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
-                    };
 
-                    if (photo !== null)
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p  id="service_info"><strong>${placeDetails.name}</strong><br><img width=100px src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    else  // no photo
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    infoWindow.open(map, marker)
-                })
-            }
-
-        function createMuseumMarker(place) {
-            // Create marker for museum
-            let service = new google.maps.places.PlacesService(map);
-            const marker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: place.name,
-                icon: {
-                    url: 'https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png',
-                    scaledSize: new google.maps.Size(20, 20)
-                }
-            });
-            museumMarkers.push(marker); // Add marker to museumMarkers array
-            infoWindow = new google.maps.InfoWindow()
-
-google.maps.event.addListener(marker, "click", () =>
-{
-    let photo = null
-                    if (typeof (place.photos) !== "undefined") // there is at least one photo
-                    {
-                        photo = place.photos[0].getUrl()
-                    }
-
-                    request = {
-                        placeId: place.place_id,
-                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
-                    };
-
-                    if (photo !== null)
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br><img src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    else  // if there is no photo
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    infoWindow.open(map, marker)
-                })
-            }
-
-        function createBarMarker(place) {
-            // Create marker for bars
-            let service = new google.maps.places.PlacesService(map);
-            const marker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: place.name,
-                icon: {
-                    url: 'http://maps.gstatic.com/mapfiles/ms2/micons/bar.png',
-                    scaledSize: new google.maps.Size(20, 20)
-                }
-            });
-            barMarkers.push(marker); // Add marker to barMarkers array
-
-            infoWindow = new google.maps.InfoWindow()
-
-google.maps.event.addListener(marker, "click", () =>
-{
-    let photo = null
-                    if (typeof (place.photos) !== "undefined") // there is at least one photo
-                    {
-                        photo = place.photos[0].getUrl()
-                    }
-
-                    request = {
-                        placeId: place.place_id,
-                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
-                    };
-
-                    if (photo !== null)
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br><img width=100px src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    else  // no photo
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    infoWindow.open(map, marker)
-                })
-            }
-
-        function createRestaurantMarker(place) {
-            // Create marker for restaurents 
-            let service = new google.maps.places.PlacesService(map);
-            const marker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: place.name,
-                icon: {
-                    url: 'http://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png',
-                    scaledSize: new google.maps.Size(20, 20)
-                }
-            });
-            restaurantMarkers.push(marker); // Add marker to barMarkers array
-            infoWindow = new google.maps.InfoWindow()
-
-google.maps.event.addListener(marker, "click", () =>
-{
-    let photo = null
-                    if (typeof (place.photos) !== "undefined") // there is at least one photo
-                    {
-                        photo = place.photos[0].getUrl()
-                    }
-
-                    request = {
-                        placeId: place.place_id,
-                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
-                    };
-
-                    if (photo !== null)
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br><img width=100px src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    else  // no photo
-                    {
-                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
-                    }
-                    infoWindow.open(map, marker)
-                })
-            }
 
         function hidePointsOfInterest(map) {
             let styles = [
@@ -269,29 +118,25 @@ google.maps.event.addListener(marker, "click", () =>
         }
 
         function clearMarkers() {
-            // Clear cafe markers
-            cafeMarkers.forEach(marker => marker.setMap(null));
-            cafeMarkers = [];
-            // Clear museum markers
-            museumMarkers.forEach(marker => marker.setMap(null));
-            museumMarkers = [];
-            // Clear bar markers
-            barMarkers.forEach(marker => marker.setMap(null));
-            barMarkers = [];
-
-            restaurantMarkers.forEach(marker => marker.setMap(null));
-            restaurantMarkers = [];
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
         }
 
-        function switchPlaceType(newType) {
-            placeType = newType;
+        function switchPlaceType() {
+            const checkboxes = document.getElementsByName('placeType');
+            placeType = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    placeType.push(checkbox.value);
+                }
+            });
             performNearbySearch();
         }
     </script>
 </head> 
 
 <body>
-    <div class="header">
+    <div class="am_header">
         <div class="background-image">
             <img src="images/background.jpg" alt="background" class="background">
         </div>
@@ -305,16 +150,17 @@ google.maps.event.addListener(marker, "click", () =>
     </div>
 </div>
       
-    <div class="radio">
-   <label for="cafe">Cafes</label>
-    <input name="placeType" id="cafe" type="radio" value="cafe" onclick="switchPlaceType('cafe');">
+<div class="am_checkbox">
+    <label for="cafe">Cafes</label>
+    <input name="placeType" id="cafe" type="checkbox" value="cafe" onclick="switchPlaceType();" />
     <label for="museum">Museums</label>
-    <input name="placeType" id="museum" type="radio" value="museum" onclick="switchPlaceType('museum');">
+    <input name="placeType" id="museum" type="checkbox" value="museum" onclick="switchPlaceType();" />
     <label for="bar">Bars</label>
-    <input name="placeType" id="bar" type="radio" value="bar" onclick="switchPlaceType('bar');">
+    <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();" />
     <label for="restaurant">Restaurants</label>
-    <input name="placeType" id="restaurant" type="radio" value="restaurant" onclick="switchPlaceType('restaurant');">
-</div> 
+    <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
+</div>
+
 
 <div class="space-above-map"></div> 
     <div id=map></div>    
