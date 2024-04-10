@@ -82,12 +82,12 @@
             google.maps.event.addListener(marker, "click", () => {
                 const infoWindow = new google.maps.InfoWindow();
                 infoWindow.setContent(`<div id="content">
-                    <h1>${place.title}</h1>
-                    <div id="content">
+                    <h1 class="info-window-title">${place.title}</h1>
+                    
                         <img src="${place.image}">
                         <p>${place.content}</p>
-                        <p>For more information, see our website<br><a href="${place.website}">website</a></p>
-                    </div>
+                        <p>For more information: <a href="${place.website}">website</a></p>
+                   
                 </div>`);
                 infoWindow.open(map, marker);
             });
@@ -95,6 +95,7 @@
 
         function createCafeMarker(place) {
             // Create marker for cafe
+            let service = new google.maps.places.PlacesService(map);
             const marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
@@ -106,21 +107,36 @@
             });
             cafeMarkers.push(marker); // Add marker to cafeMarkers array
 
-            google.maps.event.addListener(marker, "click", () => {
-                const infoWindow = new google.maps.InfoWindow();
-                infoWindow.setContent(`<div id="content">
-                    <h1>${place.name}</h1>
-                    <div id="content">
-                        <p>Address: ${place.vicinity}</p>
-                        <p>Rating: ${place.rating}</p>
-                    </div>
-                </div>`);
-                infoWindow.open(map, marker);
-            });
-        }
+            infoWindow = new google.maps.InfoWindow()
+
+google.maps.event.addListener(marker, "click", () =>
+{
+    let photo = null
+                    if (typeof (place.photos) !== "undefined") // there is at least one photo
+                    {
+                        photo = place.photos[0].getUrl()
+                    }
+
+                    request = {
+                        placeId: place.place_id,
+                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
+                    };
+
+                    if (photo !== null)
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p  id="service_info"><strong>${placeDetails.name}</strong><br><img width=100px src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    else  // no photo
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    infoWindow.open(map, marker)
+                })
+            }
 
         function createMuseumMarker(place) {
             // Create marker for museum
+            let service = new google.maps.places.PlacesService(map);
             const marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
@@ -131,20 +147,36 @@
                 }
             });
             museumMarkers.push(marker); // Add marker to museumMarkers array
-        google.maps.event.addListener(marker, "click", () => {
-                const infoWindow = new google.maps.InfoWindow();
-                infoWindow.setContent(`<div id="content">
-                    <h1>${place.name}</h1>
-                    <div id="content">
-                        <p>Address: ${place.vicinity}</p>
-                        <p>Rating: ${place.rating}</p>
-                    </div>
-                </div>`);
-                infoWindow.open(map, marker);
-            });
-        }
+            infoWindow = new google.maps.InfoWindow()
+
+google.maps.event.addListener(marker, "click", () =>
+{
+    let photo = null
+                    if (typeof (place.photos) !== "undefined") // there is at least one photo
+                    {
+                        photo = place.photos[0].getUrl()
+                    }
+
+                    request = {
+                        placeId: place.place_id,
+                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
+                    };
+
+                    if (photo !== null)
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br><img src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    else  // if there is no photo
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    infoWindow.open(map, marker)
+                })
+            }
+
         function createBarMarker(place) {
-            // Create marker for shps
+            // Create marker for bars
+            let service = new google.maps.places.PlacesService(map);
             const marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
@@ -156,20 +188,36 @@
             });
             barMarkers.push(marker); // Add marker to barMarkers array
 
-            google.maps.event.addListener(marker, "click", () => {
-                const infoWindow = new google.maps.InfoWindow();
-                infoWindow.setContent(`<div id="content">
-                    <h1>${place.name}</h1>
-                    <div id="content">
-                        <p>Address: ${place.vicinity}</p>
-                        <p>Rating: ${place.rating}</p>
-                    </div>
-                </div>`);
-                infoWindow.open(map, marker);
-            });
-        }
+            infoWindow = new google.maps.InfoWindow()
+
+google.maps.event.addListener(marker, "click", () =>
+{
+    let photo = null
+                    if (typeof (place.photos) !== "undefined") // there is at least one photo
+                    {
+                        photo = place.photos[0].getUrl()
+                    }
+
+                    request = {
+                        placeId: place.place_id,
+                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
+                    };
+
+                    if (photo !== null)
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br><img width=100px src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    else  // no photo
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    infoWindow.open(map, marker)
+                })
+            }
+
         function createRestaurantMarker(place) {
-            // Create marker for shps
+            // Create marker for restaurents 
+            let service = new google.maps.places.PlacesService(map);
             const marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
@@ -180,19 +228,33 @@
                 }
             });
             restaurantMarkers.push(marker); // Add marker to barMarkers array
+            infoWindow = new google.maps.InfoWindow()
 
-            google.maps.event.addListener(marker, "click", () => {
-                const infoWindow = new google.maps.InfoWindow();
-                infoWindow.setContent(`<div id="content">
-                    <h1>${place.name}</h1>
-                    <div id="content">
-                        <p>Address: ${place.vicinity}</p>
-                        <p>Rating: ${place.rating}</p>
-                    </div>
-                </div>`);
-                infoWindow.open(map, marker);
-            });
-        }
+google.maps.event.addListener(marker, "click", () =>
+{
+    let photo = null
+                    if (typeof (place.photos) !== "undefined") // there is at least one photo
+                    {
+                        photo = place.photos[0].getUrl()
+                    }
+
+                    request = {
+                        placeId: place.place_id,
+                        fields: ["name", "formatted_address", "formatted_phone_number", "icon", "geometry"],
+                    };
+
+                    if (photo !== null)
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br><img width=100px src="${photo}"><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    else  // no photo
+                    {
+                        service.getDetails(request, (placeDetails) => infoWindow.setContent(`<p id="service_info"><strong>${placeDetails.name}</strong><br>${(placeDetails.formatted_address).replaceAll(', ', ',<br>')}</br>${placeDetails.formatted_phone_number?placeDetails.formatted_phone_number:""}</p>`))
+                    }
+                    infoWindow.open(map, marker)
+                })
+            }
+
         function hidePointsOfInterest(map) {
             let styles = [
                 {
@@ -239,18 +301,18 @@
 
     <div id="scroll-container">
     <div id="scroll-text">
-        <span class="moving-text">Paris Olympic Games runs from Friday, Jul 26, 2024 to Sunday, Aug 11, 2024.</span>
+        <span class="moving-text">The 2024 Paris Olympic Games runs from Friday, July 26, 2024 to Sunday, August 11, 2024.</span>
     </div>
 </div>
       
     <div class="radio">
-   <label for="cafe">Cafes:</label>
+   <label for="cafe">Cafes</label>
     <input name="placeType" id="cafe" type="radio" value="cafe" onclick="switchPlaceType('cafe');">
-    <label for="museum">Museums:</label>
+    <label for="museum">Museums</label>
     <input name="placeType" id="museum" type="radio" value="museum" onclick="switchPlaceType('museum');">
-    <label for="bar">Bars:</label>
+    <label for="bar">Bars</label>
     <input name="placeType" id="bar" type="radio" value="bar" onclick="switchPlaceType('bar');">
-    <label for="restaurant">Restaurants:</label>
+    <label for="restaurant">Restaurants</label>
     <input name="placeType" id="restaurant" type="radio" value="restaurant" onclick="switchPlaceType('restaurant');">
 </div> 
 

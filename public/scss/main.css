@@ -85,18 +85,38 @@ body {
 #content img {
   clear: both;
   float: left;
-  width: 150px;
-  border-radius: 100px;
-  margin: 20px;
+  width: 250px;
+  border-radius: 10px;
+  margin: 15px;
   margin-top: 0px;
-  border: thin solid #ccc;
+  border: 1px solid #f30808;
+}
+
+#service_info {
+  width: 300px;
+  height: 200px;
+}
+
+#service_info img {
+  clear: both;
+  float: left;
+  width: 270px;
+  height: 200px;
+  border-radius: 10px;
+  margin: 15px;
+  margin-top: 0px;
+  border: 1px solid #f30808;
+}
+
+.info-window-title {
+  text-align: center;
+  margin-top: 0;
 }
 
 .footer {
   background-color: #4d43c0;
   color: #f30808;
   text-align: center;
-  padding: 2px;
   position: fixed;
   bottom: 0;
   left: 0;

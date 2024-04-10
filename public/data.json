@@ -170,80 +170,80 @@
     {
         "title": "Marseille Marina",
         "image": "images/marina.jpg",
-        "content": "",
-        "website": "",
+        "content": "For the sailing events, Paris 2024 will be heading to the Mediterranean. Through its location, the city of Marseille is naturally focused on the sea, with exceptional sailing conditions. Thanks to Marseille’s internationally renowned expertise in hosting and organising boat-related events, the city and its Marina offer an ideal venue for the sailing competitions with the Paris 2024 Games.",
+        "website": "https://www.paris2024.org/en/venue/marseille-marina/",
         "latitude": 43.2942,
         "longitude": 5.3672
     },
     {
         "title": "Marseille Stadium",
         "image": "images/marseilleStadium.jpeg",
-        "content": "",
-        "website": "",
+        "content": "The legendary Marseille Stadium is France’s second largest and has been the stage for the European and national achievements of Olympique de Marseille, its resident club, since it was built. Built in 1937, Stade Vélodrome underwent several renovations through to its most recent one, designed by the architects SCAU, which was completed in 2014. Following this renovation, the Stade Vélodrome has a very modern new look, thanks to the new roof that now covers its curved stands, as well as increased capacity.",
+        "website": "https://www.paris2024.org/en/venue/marseille-stadium/",
         "latitude": 43.2699,
         "longitude": 5.3959
     },
     {
         "title": "Nice Stadium",
         "image": "images/niceStadium.jpeg",
-        "content": "",
-        "website": "",
+        "content": "Nice Stadium is an ultramodern venue, located close to the Mediterranean, built in 2013 to replace the city’s previous facility, the ageing and outdated Stade du Ray. Home to the football club OGC Nice, this new stadium with its magnificent architecture includes more than 10,000 sqm of exhibition space and has been designed in line with environmentally responsible standards, illustrated by its 7,000 sqm of rooftop solar panels and its system for harvesting and reusing rainwater.",
+        "website": "https://www.paris2024.org/en/venue/nice-stadium/",
         "latitude": 43.7051,
         "longitude": 7.1926
     },
     {
         "title": "North Paris Arena",
         "image": "images/northParis.jpeg",
-        "content": "",
-        "website": "",
+        "content": "The Villepinte exhibition centre will be turned into a large modular sports facility called “the North Paris Arena” for the Games. This huge exhibition centre with nine halls is the largest such facility in France, with another Games competition venue – the Paris Expo exhibition centre at Porte de Versailles – coming in second. Designed to accommodate large gatherings, the North Paris Arena is the perfect venue in Villepinte – a city right in the heart of Seine-Saint-Denis – for thousands of spectators to see the Paris 2024 Olympic and Paralympic Games action up close.",
+        "website": "https://www.paris2024.org/en/venue/north-paris-arena/",
         "latitude": 48.895226,
         "longitude": 2.229182
     },
     {
         "title": "Paris La Defense Arena",
         "image": "images/laDefense.jpg",
-        "content": "",
-        "website": "",
+        "content": "In 2024, for the first time, the Paris La Défense Arena, located in Nanterre, is transforming into an Olympic swimming pool. Paris La Défense Arena is a truly exceptional facility in terms of its scale, its capacity and its technology: 13km of stands, 5,500-tonne framework, 28,632 sq.m of courts and pitches… While this venue has already welcomed more than 2 million spectators since it opened, with performances from leading international artists, conventions and seminars, as well as the rugby matches of Racing 92, its resident club, in 2024 it will host swimming events for the very first time. How? Thanks to a modular, multipurpose structure.",
+        "website": "https://www.paris2024.org/en/venue/paris-la-defense-arena/",
         "latitude": 48.8947,
         "longitude": 2.2297
     },
     {
         "title": "Pierre Mauroy Stadium",
         "image": "images/Pierre-Mauroy.jpg",
-        "content": "",
-        "website": "",
+        "content": "Pierre Mauroy stadium is a modular multi-sports showcase with a spectacular design, built in 2012 and home to LOSC, one of France’s leading football clubs. Located in Villeneuve-d’Ascq, it enables the Hauts de France region and the European Metropolis of Lille, the country’s fourth largest city area, to benefit from an outstanding facility that can host a range of cultural and sporting events throughout the year.",
+        "website": "https://www.paris2024.org/en/venue/pierre-mauroy-stadium/",
         "latitude": 50.6119,
         "longitude": 3.1305
     },
     {
         "title": "Porte de la Chapelle Arena",
         "image": "images/Porte-de-la-Chapelle.jpg",
-        "content": "",
-        "website": "",
+        "content": "The Porte de la Chapelle Arena, an eco-design venue thought out for a legacy to benefit neighbouring communities well beyond the Games, is a new cultural hub to the north of Paris hosting a range of cultural and sporting events each day, including the home games of Paris Basketball. This new facility is designed to be open to all (especially people living nearby) and to offer a variety of sports activities in its complementary spaces. With its mid-size capacity of 8,000 seats, the Porte de la Chapelle Arena will further strengthen the choice of sport and live performance venues available throughout Paris.",
+        "website": "https://olympics.com/en/paris-2024/venues/porte-de-la-chapelle-arena",
         "latitude": 48.8994,
         "longitude": 2.3605
     },
     {
         "title": "Saint-Quentin-en-Yvelines BMX Stadium",
         "image": "images/Saint-Quentin.jpg",
-        "content": "",
-        "website": "",
+        "content": "The Saint-Quentin-en-Yvelines BMX Stadium is part of the Saint-Quentin-en-Yvelines Velodrome complex, just five minutes’ walk from the Velodrome. The Saint-Quentin-en-Yvelines Velodrome’s permanent infrastructures include enough space to be able to bring two Games venues together at one site, to the great delight of cycling fans. This close connection also makes it possible to pool certain facilities required for organising the BMX and track cycling events.",
+        "website": "https://www.paris2024.org/en/venue/saint-quentin-en-yvelines-bmx-stadium/",
         "latitude": 48.7862,
         "longitude": 2.0342
     },
     {
         "title": "Saint-Quentin-en-Yvelines Velodrome",
         "image": "images/Saint-Quentin-en-Yvelines.jpg",
-        "content": "",
-        "website": "",
+        "content": "The national Vélodrome is a real gem, already built and operational ten years before the Paris 2024 Games. This flagship of the French Cycling Federation, whose headquarters the Vélodrome has hosted since its construction, came out of the ground in 2014. This equipment of very high level frequently welcomes the various French teams in its ultra-modern facilities. The modularity and flexibility of the Vélodrome, embodied by its vast central area, allow the venue to regularly host events and training sessions for other sports.",
+        "website": "https://www.paris2024.org/fr/site/velodrome-national-saint-quentin-en-yvelines/",
         "latitude": 48.7880,
         "longitude": 2.0349
     },
     {
         "title": "South Paris Arena",
         "image": "images/SouthParisArena.jpg",
-        "content": "",
-        "website": "",
+        "content": "South Paris Arena is part of Paris Expo, an exhibition and convention centre that is one of the most active in Europe and most visited in France. Across 35 hectares, 228,000 sqm of exhibition halls and 8 pavilions, Paris Expo welcomes 7.5 million visitors each year, particularly during the International Agricultural Show. With Halls 1, 4 and 6 hosting a large number of the Games’ events and those set aside for Games logistics, Paris Expo will be a major hub for the Paris 2024 Games.",
+        "website": "https://www.paris2024.org/en/venue/south-paris-arena/",
         "latitude": 48.8314,
         "longitude": 2.2896
     }

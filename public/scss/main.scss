@@ -94,23 +94,44 @@ padding-top: 20;
 #content {
     width: 300px;
     height: 200px;
+    
 }
   
 #content img {
     clear: both;
     float: left;
-    width: 150px;
-    border-radius: 100px;
-    margin: 20px;
-    margin-top: 0px;
-    border: thin solid #ccc;
+    width: 250px;
+    border-radius: 10px;
+    margin: 15px;
+    margin-top: 0px; 
+    border: 1px solid $header-text-color;
+}
+
+#service_info{
+    width: 300px;
+    height: 200px;
+}
+
+#service_info img{
+    clear: both;
+    float: left;
+    width: 270px;
+    height: 200px;
+    border-radius: 10px;
+    margin: 15px;
+    margin-top: 0px; 
+    border: 1px solid $header-text-color;
+}
+
+.info-window-title {
+    text-align: center;
+    margin-top: 0;
 }
 
 .footer {
     background-color: $header-background-color;
     color: $header-text-color;
     text-align: center;
-    padding: 2px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -143,7 +164,7 @@ padding-top: 20;
         height: 700px;
         margin: 0 auto;
     }
-  
+   
     #content {
         width: 100%;
         max-width: 300px;
