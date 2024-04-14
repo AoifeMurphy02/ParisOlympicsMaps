@@ -12,22 +12,71 @@
     
     <script>
         let map = null;
-        let placeType = []; // Change to an array to store multiple types
+        let placeType = []; // an array to store multiple types
         let markers = [];
-
+        let directionsRenderer = null
         function loadMap() {
+                new google.maps.places.Autocomplete(start)
+                new google.maps.places.Autocomplete(end)
+                new google.maps.places.Autocomplete(Hotel)
+
             map = new google.maps.Map(document.getElementById("map"), {
                 mapId: "MY_MAP_ID",
-                zoom: 11.5,
+                zoom: 14,
                 center: new google.maps.LatLng(48.86, 2.35),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControlOptions: {
                     mapTypeIds: ["satellite", "roadmap", "hidePoi"]
                 },
+                
             });
+            directionsRenderer = new google.maps.DirectionsRenderer()
+                directionsRenderer.setMap(map)
+                directionsRenderer.setPanel(document.getElementById("directions"))
+              
             hidePointsOfInterest(map);
+            loadData();
             performNearbySearch();
+            calculateRoute();
+            
+           
         }
+
+
+
+        function loadData() {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        createMarker(item);
+                    });
+                })
+                .catch(error => console.error('Error loading data:', error));
+        }
+        function calculateRoute()
+            {
+                let start = document.getElementById("start").value
+                let end = document.getElementById("end").value
+                
+                if(start === "" || end === "")
+                {
+                    return
+                }
+
+                let request = {origin: start,
+                    destination: end,
+                    travelMode: google.maps.TravelMode.DRIVING}
+
+                directionsService = new google.maps.DirectionsService()
+                directionsService.route(request, (route, status) =>
+                {
+                    if (status === google.maps.DirectionsStatus.OK)
+                    {
+                        directionsRenderer.setDirections(route)
+                    }
+                })
+            }
 
         function performNearbySearch() {
             clearMarkers();
@@ -53,13 +102,13 @@
 
         function createMarker(place) {
     let service = new google.maps.places.PlacesService(map);
-    const iconUrl = getIconURL(place.types); // Call getIconURL function with place.types
+    const iconUrl = getIconURL(place.types); // call getIconURL function with place.types
     const marker = new google.maps.Marker({
         position: place.geometry.location,
         map: map,
         title: place.name,
         icon: {
-            url: iconUrl, // Use the icon URL returned by getIconURL
+            url: iconUrl, // use the icon URL returned by getIconURL
             scaledSize: new google.maps.Size(20, 20)
         }
     });
@@ -76,7 +125,9 @@
                             <h1 class="info-window-title">${place.name}</h1>
                             ${photo ? `<img src="${photo}" width="100px">` : ''}
                             <p>${place.vicinity}</p>
-                            <p>${place.phone}</p>
+                            ${place.formatted_phone_number ? `<p>Phone Number: ${place.formatted_phone_number}</p>` : ''}
+                            ${place.serves_vegetarian_food ? `<p>Vegetarian Friendly: ${place.serves_vegetarian_food}</p>` : ''}
+                            
                             <p>For more information: <a href="${place.website}">website</a></p>
                         </div>`;
         infoWindow.setContent(content);
@@ -98,11 +149,9 @@ function getIconURL(types) {
     if (types.includes('restaurant')) {
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png';
     }
-    // Default icon if no place type matches
-    return '';
+    // default icon if no place type matches
+    return 'https://static.vecteezy.com/system/resources/previews/022/823/310/original/paris-2024-official-olympic-games-logo-symbol-abstract-design-illustration-free-vector.jpg';
 }
-
-
 
         function hidePointsOfInterest(map) {
             let styles = [
@@ -137,8 +186,8 @@ function getIconURL(types) {
 
 <body>
     <div class="am_header">
-        <div class="background-image">
-            <img src="images/background.jpg" alt="background" class="background">
+        <div class="am_backgroundImage">
+            <img src="images/background.jpg" alt="background image" class="background">
         </div>
         <!--<img src="images/logo.png" alt="Logo" class="logo">-->
         <!-- <h1 >Olympic Games Maps</h1> -->
@@ -151,6 +200,7 @@ function getIconURL(types) {
 </div>
       
 <div class="am_checkbox">
+    
     <label for="cafe">Cafes</label>
     <input name="placeType" id="cafe" type="checkbox" value="cafe" onclick="switchPlaceType();" />
     <label for="museum">Museums</label>
@@ -159,16 +209,31 @@ function getIconURL(types) {
     <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();" />
     <label for="restaurant">Restaurants</label>
     <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
+
+    <label>Hotel Name</label>
+    <input id="Hotel" type="text" />
 </div>
 
 
 <div class="space-above-map"></div> 
     <div id=map></div>    
         
+    <div id=control-panel>
+        <span class=select-location-label>Start:</span>
+        <input id=start type=text><br>
+
+        <br>
+        <span class=select-location-label>End:</span>
+        <input id=end type=text>
+
+        <input type=button onclick=calculateRoute() id=submit value=Submit>
+    </div>
+    <div id=directions></div>
         <!-- Google Maps -->
-        <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=marker,places></script>       		
+        <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=places,places></script>       		
     
         <div class="space-under-map"></div> 
+         <div id=directions></div>
     </body>
     <footer class="footer"><p>&copy; Paris Olympic Games</p></footer>
 </html> 
