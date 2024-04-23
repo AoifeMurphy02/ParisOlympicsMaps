@@ -6,7 +6,11 @@ body {
     margin: 0;
     padding: 0;
 }
+.am_conversion{
+    text-align: center;
+    
 
+}
 .am_header {
     position: relative; 
     height: 300px; 
@@ -32,20 +36,17 @@ body {
     align-items: center;
     justify-content: center;
    padding-bottom: 5px;
-   border-bottom: 1px solid $header-background-color;
-
-
-    
+   border-bottom: 1px solid $header-background-color;   
 }
 
 .am_map {
-padding-top: 20;
+    padding-top: 20;
     border: thin solid #ccc;
     margin: 0 auto;
     
 }
 
-#scroll-container {
+#am_scrollContainer {
   
     overflow: hidden;
     border-bottom: 1px solid $header-background-color;
@@ -53,14 +54,14 @@ padding-top: 20;
     color: #fff;
 }
 
-#scroll-text {
+#am_scrollText {
    
     width: 100%;
     display: block;
     white-space: nowrap;
     overflow: hidden;
 
-    .moving-text {
+    .am_movingText {
         // Apply animation only to this text 
         display: inline-block; 
         animation: am_myAnimation 15s linear infinite;
@@ -125,7 +126,7 @@ padding-top: 20;
 
 .am_footer {
     background-color: $header-background-color;
-    color: $header-text-color;
+    color: #fff;
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -144,11 +145,6 @@ padding-top: 20;
         flex-direction: column;
         align-items: flex-start; 
         padding: 20px;
-    }
-  
-    .logo {
-        margin-right: 0;
-        margin-bottom: 10px;
     }
   
     h1 {
@@ -185,12 +181,6 @@ padding-top: 20;
         padding: 20px;
     }
 
-    .logo {
-      
-        width: 55px; 
-        height: 55px;
-    }
-
     h1 {
        
         font-size: 22px; 
@@ -214,13 +204,6 @@ padding-top: 20;
         align-items: flex-start; 
         padding: 20px;
     }
-
-    .logo {
-      
-        width: 55px; 
-        height: 55px;
-    }
-
     h1 {
        
         font-size: 22px; 
@@ -235,13 +218,13 @@ padding-top: 20;
     
         
     
-    #scroll-text {
+    #am_scrollText {
         width: 100%; 
     }
-    .space-under-map {
+    .am_spaceUnderMap {
         height: 100px; 
     }
-    .space-above-map {
+    .am_spaceUnderMap {
         height: 25px; 
     }
 }

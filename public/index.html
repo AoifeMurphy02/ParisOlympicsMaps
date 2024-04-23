@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html> 
-<head>
-    
+<head> 
     <title>Paris Olympic Games Maps</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> 
     <script>
         let map = null;
         let placeType = []; // an array to store multiple types
@@ -30,19 +28,16 @@
                 },
                 
             });
-            directionsRenderer = new google.maps.DirectionsRenderer()
+            directionsRenderer = new google.maps.DirectionsRenderer({draggable: true})
                 directionsRenderer.setMap(map)
                directionsRenderer.setPanel(document.getElementById("directions"))
               
             hidePointsOfInterest(map);
             loadData();
             performNearbySearch();
-            calculateRoute("DRIVING")
-            
-           
+            calculateRoute("DRIVING")  
         }
-        function calculateRoute(travelMode = "DRIVING")
-            {
+        function calculateRoute(travelMode = "DRIVING"){
                 document.getElementById("transport-mode").innerHTML = travelMode
                 let start = document.getElementById("start").value
                 let end = document.getElementById("end").value
@@ -61,6 +56,27 @@
                 })
             }
 
+            directionsRenderer.addListener("directions_changed", () =>
+{
+    const directions = directionsRenderer.getDirections()
+    const geocoder = new google.maps.Geocoder()
+
+    // update start address
+    let start = directions.geocoded_waypoints[0].place_id
+    geocoder.geocode({placeId: start}, (results, status) =>
+    {
+        // results[0].formatted_address contains the start address
+        console.log(results[0].formatted_address)
+    })
+
+    // update end address
+    let end = directions.geocoded_waypoints[1].place_id
+    geocoder.geocode({placeId: end}, (results, status) =>
+    {
+        // results[0].formatted_address contains the end address
+        console.log(results[0].formatted_address)
+    })
+})
 
         function loadData() {
             fetch('data.json')
@@ -72,6 +88,7 @@
                 })
                 .catch(error => console.error('Error loading data:', error));
         }
+        
         function getConvision() {
             const fromCurrency = document.getElementById("from").value;
             const amount= document.getElementById("amount").value;
@@ -87,9 +104,6 @@
                 });
         }
        
-
-
-
         function performNearbySearch() {
             clearMarkers();
             const service = new google.maps.places.PlacesService(map);
@@ -113,15 +127,15 @@
         }
 
         function createMarker(place) {
-    let service = new google.maps.places.PlacesService(map);
-    const iconUrl = getIconURL(place.types); // call getIconURL function with place.types
-    const marker = new google.maps.Marker({
-        position: place.geometry.location,
-        map: map,
-        title: place.name,
-        icon: {
-            url: iconUrl, // use the icon URL returned by getIconURL
-            scaledSize: new google.maps.Size(20, 20)
+            let service = new google.maps.places.PlacesService(map);
+            const iconUrl = getIconURL(place.types); // call getIconURL function with place.types
+            const marker = new google.maps.Marker({
+            position: place.geometry.location,
+            map: map,
+            title: place.name,
+            icon: {
+                url: iconUrl, // use the icon URL returned by getIconURL
+                scaledSize: new google.maps.Size(20, 20)
         }
     });
     markers.push(marker);
@@ -201,13 +215,11 @@ function getIconURL(types) {
         <div class="am_backgroundImage">
             <img src="images/background.jpg" alt="background image" class="background">
         </div>
-        <!--<img src="images/logo.png" alt="Logo" class="logo">-->
-        <!-- <h1 >Olympic Games Maps</h1> -->
     </div>
 
-    <div id="scroll-container">
-    <div id="scroll-text">
-        <span class="moving-text">The 2024 Paris Olympic Games runs from Friday, July 26, 2024 to Sunday, August 11, 2024.</span>
+    <div id="am_scrollContainer">
+    <div id="am_scrollText">
+        <span class="am_movingText">The 2024 Paris Olympic Games runs from Friday, July 26, 2024 to Sunday, August 11, 2024.</span>
     </div>
 </div>
       
@@ -250,14 +262,15 @@ function getIconURL(types) {
         </div>
     </div>
     
+    
     <h1 id=transport-mode>Driving</h1>
         
     <details id=directions><summary>Directions</summary></details>
+
         <!-- Google Maps -->
         <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=places,places></script>       		
-        
+        <div class="am_conversion">
         <h2>Convert Currency:</h2>
-
         <select id="from">
             <option value="USD">US Dollar</option>
             <option value="AUD">Australian Dollar</option>  
@@ -266,14 +279,18 @@ function getIconURL(types) {
             <option value="CHF">Swiss Franc</option>
             <option value="MXN">Mexican Peso</option>
             <option value="PLZ">Polish złoty</option>
-          </select>
-    
+        </select>
+        <br/>
+        <br/>
         <input type="text" id="amount" placeholder="Enter amount" /> 
+        <br/>
+        <br/>
         <input type="button" value="Get Conversion" onclick="getConvision()"/>
     
         <div id="conversionResult"></div>
-         <div id=directions></div>
-       
+    </div>
+        <div class="am_spaceUnderMap"></div> 
+        <div class="am_spaceUnderMap"></div> 
         <div class="am_spaceUnderMap"></div> 
         
          

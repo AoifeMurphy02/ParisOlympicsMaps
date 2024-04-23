@@ -2,6 +2,9 @@ body {
   margin: 0;
   padding: 0; }
 
+.am_conversion {
+  text-align: center; }
+
 .am_header {
   position: relative;
   height: 300px; }
@@ -30,18 +33,18 @@ body {
   border: thin solid #ccc;
   margin: 0 auto; }
 
-#scroll-container {
+#am_scrollContainer {
   overflow: hidden;
   border-bottom: 1px solid #4d43c0;
   background-color: #f30808;
   color: #fff; }
 
-#scroll-text {
+#am_scrollText {
   width: 100%;
   display: block;
   white-space: nowrap;
   overflow: hidden; }
-  #scroll-text .moving-text {
+  #am_scrollText .am_movingText {
     display: inline-block;
     animation: am_myAnimation 15s linear infinite; }
 
@@ -92,7 +95,7 @@ body {
 
 .am_footer {
   background-color: #4d43c0;
-  color: #f30808;
+  color: #fff;
   text-align: center;
   position: fixed;
   bottom: 0;
@@ -109,10 +112,6 @@ body {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px; }
-
-  .logo {
-    margin-right: 0;
-    margin-bottom: 10px; }
 
   h1 {
     font-size: 20px; }
@@ -140,10 +139,6 @@ body {
     align-items: flex-start;
     padding: 20px; }
 
-  .logo {
-    width: 55px;
-    height: 55px; }
-
   h1 {
     font-size: 22px; }
 
@@ -162,10 +157,6 @@ body {
     align-items: flex-start;
     padding: 20px; }
 
-  .logo {
-    width: 55px;
-    height: 55px; }
-
   h1 {
     font-size: 22px; }
 
@@ -175,13 +166,13 @@ body {
     height: 600px;
     margin: auto; }
 
-  #scroll-text {
+  #am_scrollText {
     width: 100%; }
 
-  .space-under-map {
+  .am_spaceUnderMap {
     height: 100px; }
 
-  .space-above-map {
+  .am_spaceUnderMap {
     height: 25px; } }
 
 /*# sourceMappingURL=main.css.map */
