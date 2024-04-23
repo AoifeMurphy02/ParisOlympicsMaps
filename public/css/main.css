@@ -25,7 +25,7 @@ body {
   padding-bottom: 5px;
   border-bottom: 1px solid #4d43c0; }
 
-#am_map {
+.am_map {
   padding-top: 20;
   border: thin solid #ccc;
   margin: 0 auto; }
@@ -50,11 +50,20 @@ body {
     transform: translateX(0%); }
   100% {
     transform: translateX(100%); } }
-#content {
+#am_dirTextInput {
+  position: absolute;
+  top: 875px;
+  left: 160px;
+  z-index: 20;
+  background-color: white;
+  padding: 5px;
+  border: thin solid #4d43c0; }
+
+#am_content {
   width: 300px;
   height: 200px; }
 
-#content img {
+#am_content img {
   clear: both;
   float: left;
   width: 250px;
@@ -77,20 +86,22 @@ body {
   margin-top: 0px;
   border: 1px solid #f30808; }
 
-.info-window-title {
+.am_infoWindowTitle {
   text-align: center;
   margin-top: 0; }
 
-.footer {
+.am_footer {
   background-color: #4d43c0;
   color: #f30808;
   text-align: center;
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%; }
+  width: 100%;
+  z-index: 100;
+  clear: both; }
 
-.space-under-map {
+.am_spaceUnderMap {
   height: 100px; }
 
 @media screen and (max-width: 500px) {
@@ -112,15 +123,15 @@ body {
     height: 700px;
     margin: 0 auto; }
 
-  #content {
+  #am_content {
     width: 100%;
     max-width: 300px;
     margin: 0 auto; }
 
-  #content img {
+  #am_content img {
     width: 100%; }
 
-  .space-under-map {
+  .am_spaceUnderMap {
     height: 100px; } }
 /* Media query for tablets (between 500px and 1000px) */
 @media screen and (min-width: 501px) and (max-width: 1000px) {
@@ -142,7 +153,7 @@ body {
     height: 600px;
     margin: 0 auto; }
 
-  .space-under-map {
+  .am_spaceUnderMap {
     height: 100px; } }
 /* Media query 1001px + */
 @media screen and (min-width: 1001px) {

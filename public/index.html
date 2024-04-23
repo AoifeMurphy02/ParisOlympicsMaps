@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     
@@ -32,16 +32,34 @@
             });
             directionsRenderer = new google.maps.DirectionsRenderer()
                 directionsRenderer.setMap(map)
-                directionsRenderer.setPanel(document.getElementById("directions"))
+               directionsRenderer.setPanel(document.getElementById("directions"))
               
             hidePointsOfInterest(map);
             loadData();
             performNearbySearch();
-            calculateRoute();
+            calculateRoute("DRIVING")
             
            
         }
+        function calculateRoute(travelMode = "DRIVING")
+            {
+                document.getElementById("transport-mode").innerHTML = travelMode
+                let start = document.getElementById("start").value
+                let end = document.getElementById("end").value
 
+                let request = {origin: start,
+                    destination: end,
+                    travelMode: travelMode}
+
+                directionsService = new google.maps.DirectionsService()
+                directionsService.route(request, (route, status) =>
+                {
+                    if (status === google.maps.DirectionsStatus.OK)
+                    {
+                        directionsRenderer.setDirections(route)
+                    }
+                })
+            }
 
 
         function loadData() {
@@ -54,29 +72,23 @@
                 })
                 .catch(error => console.error('Error loading data:', error));
         }
-        function calculateRoute()
-            {
-                let start = document.getElementById("start").value
-                let end = document.getElementById("end").value
-                
-                if(start === "" || end === "")
-                {
-                    return
-                }
-
-                let request = {origin: start,
-                    destination: end,
-                    travelMode: google.maps.TravelMode.DRIVING}
-
-                directionsService = new google.maps.DirectionsService()
-                directionsService.route(request, (route, status) =>
-                {
-                    if (status === google.maps.DirectionsStatus.OK)
-                    {
-                        directionsRenderer.setDirections(route)
-                    }
+        function getConvision() {
+            const fromCurrency = document.getElementById("from").value;
+            const amount= document.getElementById("amount").value;
+            const host = 'api.frankfurter.app';
+            fetch(`https://${host}/latest?amount=${amount}&from=${fromCurrency}&to=EUR`)
+                .then(resp => resp.json())
+                .then((data) => {
+                    const conversionResult = document.getElementById("conversionResult");
+                    conversionResult.textContent = `${amount} ${fromCurrency} = ${data.rates.EUR} EUR`;
                 })
-            }
+                .catch(error => {
+                    console.error('Error fetching currency conversion:', error);
+                });
+        }
+       
+
+
 
         function performNearbySearch() {
             clearMarkers();
@@ -121,8 +133,8 @@
         }
 
         const infoWindow = new google.maps.InfoWindow();
-        const content = `<div id="content">
-                            <h1 class="info-window-title">${place.name}</h1>
+        const content = `<div id="am_content">
+                            <h1 class="am_infoWindowTitle">${place.name}</h1>
                             ${photo ? `<img src="${photo}" width="100px">` : ''}
                             <p>${place.vicinity}</p>
                             ${place.formatted_phone_number ? `<p>Phone Number: ${place.formatted_phone_number}</p>` : ''}
@@ -215,25 +227,56 @@ function getIconURL(types) {
 </div>
 
 
-<div class="space-above-map"></div> 
-    <div id=map></div>    
-        
-    <div id=control-panel>
+<div class="am_space"></div> 
+    <div class="am_map" id=map></div>    
+    <div id="am_dirTextInput">
+    
         <span class=select-location-label>Start:</span>
         <input id=start type=text><br>
 
         <br>
         <span class=select-location-label>End:</span>
         <input id=end type=text>
-
+        <br/>
+        <br/>
+        <div>
         <input type=button onclick=calculateRoute() id=submit value=Submit>
+        
+        <button onclick="calculateRoute('DRIVING')">Car</button>
+        <button onclick="calculateRoute('TRANSIT')">Bus</button>
+        <button onclick="calculateRoute('CYCLING')">Bike</button>
+        <button onclick="calculateRoute('WALKING')">Walk</button>
+        
+        </div>
     </div>
-    <div id=directions></div>
+    
+    <h1 id=transport-mode>Driving</h1>
+        
+    <details id=directions><summary>Directions</summary></details>
         <!-- Google Maps -->
         <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=places,places></script>       		
+        
+        <h2>Convert Currency:</h2>
+
+        <select id="from">
+            <option value="USD">US Dollar</option>
+            <option value="AUD">Australian Dollar</option>  
+            <option value="CAD">Canadian Dollar</option>
+            <option value="GBP">British Pound</option>
+            <option value="CHF">Swiss Franc</option>
+            <option value="MXN">Mexican Peso</option>
+            <option value="PLZ">Polish złoty</option>
+          </select>
     
-        <div class="space-under-map"></div> 
+        <input type="text" id="amount" placeholder="Enter amount" /> 
+        <input type="button" value="Get Conversion" onclick="getConvision()"/>
+    
+        <div id="conversionResult"></div>
          <div id=directions></div>
+       
+        <div class="am_spaceUnderMap"></div> 
+        
+         
     </body>
-    <footer class="footer"><p>&copy; Paris Olympic Games</p></footer>
+    <am_ class="am_footer"><p>&copy; Paris Olympic Games</p></am_>
 </html> 
