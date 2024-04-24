@@ -1,5 +1,5 @@
-$header-background-color: #4d43c0;
-$header-text-color: #f30808;
+$blue: #4d43c0;
+$red: #f30808;
 $header-padding: 20px;
 
 body {
@@ -7,13 +7,26 @@ body {
     padding: 0;
 }
 .am_conversion{
+    margin: auto;
+    padding: 10px;
+    align-items: center;
     text-align: center;
+    border: 1px solid $red;
+    width: 25%;
+    height: 25%;
     
 
 }
+.am_formInputConversion{
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid $blue;
+    width: 25%;
+}
 .am_header {
     position: relative; 
-    height: 300px; 
+    height: 350px; 
 
     .am_backgroundImage {
         position: absolute; 
@@ -31,12 +44,13 @@ body {
     }
 }
 .am_checkbox{
-    padding-top: 5px;
+    padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-   padding-bottom: 5px;
-   border-bottom: 1px solid $header-background-color;   
+    padding-bottom: 10px;
+    border-bottom: 1px solid $blue;
+     
 }
 
 .am_map {
@@ -45,12 +59,34 @@ body {
     margin: 0 auto;
     
 }
-
+.am_hotelName{
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding-right: 80px;
+   padding-bottom: 5px;
+ 
+}
+.am_button{
+    background-color: $blue;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid $blue;
+    padding: 5px 10px;
+}
+.am_formInput{
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid $blue;
+}
 #am_scrollContainer {
   
     overflow: hidden;
-    border-bottom: 1px solid $header-background-color;
-    background-color: $header-text-color;
+    border-bottom: 1px solid $blue;
+    background-color: $red;
     color: #fff;
 }
 
@@ -78,12 +114,12 @@ body {
 }
 #am_dirTextInput {
     position: absolute;
-    top: 875px;
+    top: 950px;
     left: 160px;
     z-index: 20; 
     background-color: white;
     padding: 5px;
-    border:thin solid $header-background-color;
+    border:thin solid $blue;
 }
 
   
@@ -100,7 +136,7 @@ body {
     border-radius: 10px;
     margin: 15px;
     margin-top: 0px; 
-    border: 1px solid $header-text-color;
+    border: 1px solid $red;
 }
 
 #service_info{
@@ -116,7 +152,7 @@ body {
     border-radius: 10px;
     margin: 15px;
     margin-top: 0px; 
-    border: 1px solid $header-text-color;
+    border: 1px solid $red;
 }
 
 .am_infoWindowTitle {
@@ -125,7 +161,7 @@ body {
 }
 
 .am_footer {
-    background-color: $header-background-color;
+    background-color: $blue;
     color: #fff;
     text-align: center;
     position: fixed;

@@ -12,7 +12,8 @@
         let map = null;
         let placeType = []; // an array to store multiple types
         let markers = [];
-        let directionsRenderer = null
+        let directionsRenderer = null;
+        let hotelMarker = null;
         function loadMap() {
                 new google.maps.places.Autocomplete(start)
                 new google.maps.places.Autocomplete(end)
@@ -25,7 +26,7 @@
                 center: new google.maps.LatLng(48.86, 2.35),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControlOptions: {
-                    mapTypeIds: ["satellite", "roadmap", "hidePoi"]
+                    mapTypeIds: ["roadmap", "hidePoi"]
                 },
                 
             });
@@ -106,7 +107,7 @@
         }
        
         function performNearbySearch(location = new google.maps.LatLng(48.86, 2.35)) {
-    clearMarkers();
+    //clearMarkers();
     const service = new google.maps.places.PlacesService(map);
 
     placeType.forEach(type => {
@@ -206,7 +207,7 @@ function getIconURL(types) {
             placeType.push(checkbox.value);
         }
     });
-    
+    clearMarkers();
     performNearbySearch(map.getCenter());
 }
 function findAndCenterHotel() {
@@ -222,30 +223,29 @@ function findAndCenterHotel() {
     }, function(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK && results[0] && results[0].geometry) {
             const hotelLocation = results[0].geometry.location;
-            map.setCenter(hotelLocation);
-            map.setZoom(15);  // Zoom in to the hotel location
 
-            // Clear any existing markers if you don't want multiple markers
-            clearMarkers();
+            // Clear the previous hotel marker if it exists
+            if (hotelMarker) {
+                hotelMarker.setMap(null);
+            }
 
-            // Create a marker for the hotel
-            const hotelMarker = new google.maps.Marker({
+            // Create a new marker for the hotel
+            hotelMarker = new google.maps.Marker({
                 position: hotelLocation,
                 map: map,
                 title: results[0].name,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' // Red marker icon
             });
-            markers.push(hotelMarker);  // Add to markers array if you want to manage this marker later
 
-            // Optionally, create an info window
+            // Optionally open an info window when the hotel marker is clicked
             const infoWindow = new google.maps.InfoWindow({
                 content: `<div><strong>${results[0].name}</strong></div>`
             });
-
-            // Add a click listener to the marker to open the info window
-            hotelMarker.addListener('click', function() {
+            google.maps.event.addListener(hotelMarker, "click", () => {
                 infoWindow.open(map, hotelMarker);
             });
+
+            map.setCenter(hotelLocation);
+            map.setZoom(15);  // Zoom in to the hotel location
 
             // Perform search around the new center
             performNearbySearch(hotelLocation);
@@ -254,12 +254,6 @@ function findAndCenterHotel() {
         }
     });
 }
-const hotelMarker = new google.maps.Marker({
-    position: hotelLocation,
-    map: map,
-    title: results[0].name,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'  // Red marker icon
-});
 
 
     </script>
@@ -280,35 +274,39 @@ const hotelMarker = new google.maps.Marker({
       
 <div class="am_checkbox">
     
-    <label for="cafe">Cafes</label>
+    <label for="cafe">Cafes:</label>
     <input name="placeType" id="cafe" type="checkbox" value="cafe" onclick="switchPlaceType();" />
-    <label for="museum">Museums</label>
+    <label for="museum">Museums:</label>
     <input name="placeType" id="museum" type="checkbox" value="museum" onclick="switchPlaceType();" />
     <label for="bar">Bars</label>
     <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();" />
     <label for="restaurant">Restaurants</label>
     <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
-    <label>Hotel Name</label>
-<input id="Hotel" type="text" />
-<button onclick="findAndCenterHotel()">Search Hotel</button>
+   
    
 </div>
-
+<div class="am_hotelName">
+<label>Hotel Name:</label>
+<input class="am_formInput" id="Hotel" type="text" />
+<button class="am_button" onclick="findAndCenterHotel()">Search</button>
+</div>  
 
 <div class="am_space"></div> 
-    <div class="am_map" id=map></div>    
+
+    <div class="am_map" id=map></div> 
+
     <div id="am_dirTextInput">
     
         <span class=select-location-label>Start:</span>
-        <input id=start type=text><br>
+        <input class="am_formInput" id=start type=text><br>
 
         <br>
         <span class=select-location-label>End:</span>
-        <input id=end type=text>
+        <input class="am_formInput" id=end type=text>
         <br/>
         <br/>
         <div>
-        <input type=button onclick=calculateRoute() id=submit value=Submit>
+        <input class="am_button" type=button onclick=calculateRoute() id=submit value=Submit>
         
         <button onclick="calculateRoute('DRIVING')">Car</button>
         <button onclick="calculateRoute('TRANSIT')">Bus</button>
@@ -339,11 +337,10 @@ const hotelMarker = new google.maps.Marker({
         </select>
         <br/>
         <br/>
-        <input type="text" id="amount" placeholder="Enter amount" /> 
-        <br/>
-        <br/>
-        <input type="button" value="Get Conversion" onclick="getConvision()"/>
-    
+        <input class="am_formInputConversion" type="text" id="amount" placeholder="Enter amount" /> 
+        
+        <input class="am_button" type="button" value="Get Conversion" onclick="getConvision()"/>
+    <br/>
         <div id="conversionResult"></div>
     </div>
 
