@@ -80,16 +80,16 @@
     })
 })
 
-        function loadData() {
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(item => {
-                        createMarker(item);
-                    });
-                })
-                .catch(error => console.error('Error loading data:', error));
-        }
+function loadData() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(item => {
+                createMarker(item);
+            });
+        })
+        .catch(error => console.error('Error loading data:', error));
+}
         
         function getConvision() {
             const fromCurrency = document.getElementById("from").value;
@@ -107,7 +107,7 @@
         }
        
         function performNearbySearch(location = new google.maps.LatLng(48.86, 2.35)) {
-    //clearMarkers();
+    clearMarkers();
     const service = new google.maps.places.PlacesService(map);
 
     placeType.forEach(type => {
@@ -123,42 +123,49 @@
         function getNearbyMarkers(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 results.forEach(result => {
-                    createMarker(result);
+                    createMarker(result, true);
                 });
             }
         }
 
-        function createMarker(place) {
-            let service = new google.maps.places.PlacesService(map);
-            const iconUrl = getIconURL(place.types); // call getIconURL function with place.types
-            const marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name,
-            icon: {
-                url: iconUrl, // use the icon URL returned by getIconURL
-                scaledSize: new google.maps.Size(20, 20)
-        }
+        function createMarker(place, isNearbySearch = false) {
+            
+    const iconUrl = getIconURL(place.types || ['default']); // Use default if no type specified
+    const marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map: map,
+        title: place.name,
+        icon: {
+            url: iconUrl,
+            scaledSize: new google.maps.Size(30, 30)
+            
+        },
+        isNearbySearch: isNearbySearch 
+        
+        
     });
     markers.push(marker);
 
     google.maps.event.addListener(marker, "click", () => {
-        let photo = null;
-        if (typeof (place.photos) !== "undefined") {
-            photo = place.photos[0].getUrl();
+        let content = `<div id="am_content">
+                            <h1 class="am_infoWindowTitle">${place.name}</h1>`;
+        
+        if (place.photos && place.photos.length > 0) {
+            // Handling Google Places API Photos
+            const photoUrl = place.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100});
+            content += `<img src="${photoUrl}" width="100px">`;
+        } else if (place.photo) {
+            // Handling direct photo URLs from JSON data
+            content += `<img src="${place.photo}" width="100px">`;
         }
 
-        const infoWindow = new google.maps.InfoWindow();
-        const content = `<div id="am_content">
-                            <h1 class="am_infoWindowTitle">${place.name}</h1>
-                            ${photo ? `<img src="${photo}" width="100px">` : ''}
-                            <p>${place.vicinity}</p>
-                            ${place.formatted_phone_number ? `<p>Phone Number: ${place.formatted_phone_number}</p>` : ''}
-                            ${place.serves_vegetarian_food ? `<p>Vegetarian Friendly: ${place.serves_vegetarian_food}</p>` : ''}
-                            
-                            <p>For more information: <a href="${place.website}">website</a></p>
-                        </div>`;
-        infoWindow.setContent(content);
+        content += `<p>${place.content || ''}</p>
+                    <p>For more information: <a href="${place.website}" target="_blank">Visit Website</a></p>
+                   </div>`;
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: content
+        });
         infoWindow.open(map, marker);
     });
 }
@@ -166,19 +173,19 @@
 
 function getIconURL(types) {
     if (types.includes('cafe')) {
-        return 'https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png';
+        return 'https://i.pinimg.com/736x/7b/20/07/7b2007061328335769f34f71c4de4f64.jpg';
     }
     if (types.includes('museum')) {
-        return 'https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png';
+        return 'https://w7.pngwing.com/pngs/204/683/png-transparent-computer-icons-art-museum-others-miscellaneous-cdr-logo.png';
     }
     if (types.includes('bar')) {
-        return 'http://maps.gstatic.com/mapfiles/ms2/micons/bar.png';
+        return 'https://cdn-icons-png.flaticon.com/512/71/71001.png';
     }
     if (types.includes('restaurant')) {
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png';
     }
     // default icon if no place type matches
-    return 'https://static.vecteezy.com/system/resources/previews/022/823/310/original/paris-2024-official-olympic-games-logo-symbol-abstract-design-illustration-free-vector.jpg';
+    return 'https://discover.sportsengineplay.com/sites/default/files/images/Main%20Logo.png';
 }
 
         function hidePointsOfInterest(map) {
@@ -195,9 +202,15 @@ function getIconURL(types) {
         }
 
         function clearMarkers() {
-            markers.forEach(marker => marker.setMap(null));
-            markers = [];
+    markers = markers.filter(marker => {
+        if (marker.isNearbySearch) {
+            marker.setMap(null);
+            return false;
         }
+        return true;
+    });
+}
+
 
         function switchPlaceType() {
     const checkboxes = document.getElementsByName('placeType');
@@ -207,13 +220,13 @@ function getIconURL(types) {
             placeType.push(checkbox.value);
         }
     });
-    clearMarkers();
+    //clearMarkers();
     performNearbySearch(map.getCenter());
 }
 function findAndCenterHotel() {
     const hotelName = document.getElementById("Hotel").value;
     if (!hotelName) {
-        alert("Please enter a hotel name.");
+        
         return;
     }
     const service = new google.maps.places.PlacesService(map);
@@ -229,7 +242,7 @@ function findAndCenterHotel() {
                 hotelMarker.setMap(null);
             }
 
-            // Create a new marker for the hotel
+            // new marker for the hotel
             hotelMarker = new google.maps.Marker({
                 position: hotelLocation,
                 map: map,
@@ -278,9 +291,9 @@ function findAndCenterHotel() {
     <input name="placeType" id="cafe" type="checkbox" value="cafe" onclick="switchPlaceType();" />
     <label for="museum">Museums:</label>
     <input name="placeType" id="museum" type="checkbox" value="museum" onclick="switchPlaceType();" />
-    <label for="bar">Bars</label>
+    <label for="bar">Bars:</label>
     <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();" />
-    <label for="restaurant">Restaurants</label>
+    <label for="restaurant">Restaurants:</label>
     <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
    
    
