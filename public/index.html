@@ -17,6 +17,7 @@
                 new google.maps.places.Autocomplete(start)
                 new google.maps.places.Autocomplete(end)
                 new google.maps.places.Autocomplete(Hotel)
+               
 
             map = new google.maps.Map(document.getElementById("map"), {
                 mapId: "MY_MAP_ID",
@@ -104,19 +105,19 @@
                 });
         }
        
-        function performNearbySearch() {
-            clearMarkers();
-            const service = new google.maps.places.PlacesService(map);
-            const servicesCentreLocation = { lat: 48.86, lng: 2.35 };
+        function performNearbySearch(location = new google.maps.LatLng(48.86, 2.35)) {
+    clearMarkers();
+    const service = new google.maps.places.PlacesService(map);
 
-            placeType.forEach(type => {
-                service.nearbySearch({
-                    location: servicesCentreLocation,
-                    radius: 1900,
-                    type: type
-                }, getNearbyMarkers);
-            });
-        }
+    placeType.forEach(type => {
+        service.nearbySearch({
+            location: location,
+            radius: 1900,  // Adjust radius as necessary
+            type: type
+        }, getNearbyMarkers);
+    });
+}
+
 
         function getNearbyMarkers(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -198,15 +199,69 @@ function getIconURL(types) {
         }
 
         function switchPlaceType() {
-            const checkboxes = document.getElementsByName('placeType');
-            placeType = [];
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    placeType.push(checkbox.value);
-                }
-            });
-            performNearbySearch();
+    const checkboxes = document.getElementsByName('placeType');
+    placeType = [];
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            placeType.push(checkbox.value);
         }
+    });
+    
+    performNearbySearch(map.getCenter());
+}
+function findAndCenterHotel() {
+    const hotelName = document.getElementById("Hotel").value;
+    if (!hotelName) {
+        alert("Please enter a hotel name.");
+        return;
+    }
+    const service = new google.maps.places.PlacesService(map);
+    service.findPlaceFromQuery({
+        query: hotelName,
+        fields: ['name', 'geometry']
+    }, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results[0] && results[0].geometry) {
+            const hotelLocation = results[0].geometry.location;
+            map.setCenter(hotelLocation);
+            map.setZoom(15);  // Zoom in to the hotel location
+
+            // Clear any existing markers if you don't want multiple markers
+            clearMarkers();
+
+            // Create a marker for the hotel
+            const hotelMarker = new google.maps.Marker({
+                position: hotelLocation,
+                map: map,
+                title: results[0].name,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' // Red marker icon
+            });
+            markers.push(hotelMarker);  // Add to markers array if you want to manage this marker later
+
+            // Optionally, create an info window
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<div><strong>${results[0].name}</strong></div>`
+            });
+
+            // Add a click listener to the marker to open the info window
+            hotelMarker.addListener('click', function() {
+                infoWindow.open(map, hotelMarker);
+            });
+
+            // Perform search around the new center
+            performNearbySearch(hotelLocation);
+        } else {
+            alert("Hotel not found. Try a different name.");
+        }
+    });
+}
+const hotelMarker = new google.maps.Marker({
+    position: hotelLocation,
+    map: map,
+    title: results[0].name,
+    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'  // Red marker icon
+});
+
+
     </script>
 </head> 
 
@@ -233,9 +288,10 @@ function getIconURL(types) {
     <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();" />
     <label for="restaurant">Restaurants</label>
     <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
-
     <label>Hotel Name</label>
-    <input id="Hotel" type="text" />
+<input id="Hotel" type="text" />
+<button onclick="findAndCenterHotel()">Search Hotel</button>
+   
 </div>
 
 
@@ -262,13 +318,14 @@ function getIconURL(types) {
         </div>
     </div>
     
-    
+    <div class="am_dirDiv">
     <h1 id=transport-mode>Driving</h1>
-        
+    </div> 
     <details id=directions><summary>Directions</summary></details>
 
         <!-- Google Maps -->
         <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=places,places></script>       		
+        
         <div class="am_conversion">
         <h2>Convert Currency:</h2>
         <select id="from">
@@ -278,7 +335,7 @@ function getIconURL(types) {
             <option value="GBP">British Pound</option>
             <option value="CHF">Swiss Franc</option>
             <option value="MXN">Mexican Peso</option>
-            <option value="PLZ">Polish złoty</option>
+           
         </select>
         <br/>
         <br/>
@@ -289,9 +346,12 @@ function getIconURL(types) {
     
         <div id="conversionResult"></div>
     </div>
+
         <div class="am_spaceUnderMap"></div> 
         <div class="am_spaceUnderMap"></div> 
+        <div class="am_spaceUnderMap"></div>
         <div class="am_spaceUnderMap"></div> 
+        <div class="am_spaceUnderMap"></div>  
         
          
     </body>
