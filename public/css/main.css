@@ -2,22 +2,45 @@ body {
   margin: 0;
   padding: 0; }
 
-.am_conversion {
-  margin: auto;
-  padding: 10px;
+.am_underMapContainer {
+  display: flex;
+  justify-content: space-around;
   align-items: center;
+  padding: 20px 10px;
+  flex-wrap: wrap; }
+
+.am_conversion, .am_translate, .am_dirDiv {
+  flex: 1 1 30%;
+  /* Each takes up roughly a third of the space, shrinking and growing as needed */
+  margin: 10px;
+  box-sizing: border-box;
+  /* Includes padding and border in the element's total width and height */
+  padding: 20px;
   text-align: center;
-  border: 1px solid #f30808;
-  width: 25%;
-  height: 25%; }
+  min-width: 250px;
+  /* Minimum width so items don't become too narrow */ }
 
-.am_formInputConversion {
-  background-color: white;
-  border-radius: 20px;
-  padding: 5px 10px;
-  border: 1px solid #4d43c0;
-  width: 25%; }
+/**.am_conversion{
+    margin: auto;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+   // border: 1px solid $red;
+    width: 25%;
+    height: 25%;
+    
 
+}
+.am_translate{
+    text-align: center;
+}
+.am_formInputConversion{
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid $blue;
+    width: 25%;
+}*/
 .am_header {
   position: relative;
   height: 350px; }
@@ -51,7 +74,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: right;
-  padding-right: 80px;
+  padding-right: 150px;
   padding-bottom: 5px; }
 
 .am_button {
@@ -124,6 +147,10 @@ body {
   margin-top: 0px;
   border: 1px solid #f30808; }
 
+.am_dirDiv {
+  text-align: center;
+  padding: 5px; }
+
 .am_infoWindowTitle {
   text-align: center;
   margin-top: 0; }
@@ -144,18 +171,38 @@ body {
 
 @media screen and (max-width: 500px) {
   .am_header {
+    height: 150px;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px; }
+    padding: 10px; }
 
-  h1 {
-    font-size: 20px; }
-
-  #map {
+  .am_map {
     padding-top: 20;
-    width: 80%;
-    height: 700px;
+    width: 90%;
+    height: 600px;
     margin: 0 auto; }
+
+  .am_hotelName {
+    padding-top: 5px;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 5px;
+    justify-content: center;
+    width: 100%;
+    padding-right: 0px; }
+
+  #am_dirTextInput {
+    position: absolute;
+    top: 880px;
+    left: 100px;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 5px; }
+
+  .am_footer {
+    visibility: hidden; }
 
   #am_content {
     width: 100%;

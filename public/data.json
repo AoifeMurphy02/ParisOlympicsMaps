@@ -20,6 +20,7 @@
                 "lng": 2.2530
             }
         },
+        "types": ["olympic-venue"],
         "photo": "images/Parc-des-Princes.jpeg",
         "content": "For the Olympic Games, the Parc des Princes will be hosting the men's and women's football matches, which will be played on this legendary pitch.",
         "website": "https://www.paris2024.org/en/venue/parc-des-princes/"
@@ -32,6 +33,7 @@
                 "lng": 2.300452
             }
         },
+        "types": ["olympic-venue"],
         "photo": "images/Eiffel-Tower-Stadium.jpg",
         "content": "During Paris 2024, the Champ de Mars, a beloved public garden, will be transformed into a dynamic sports venue. Hosting Beach Volleyball and Blind Football events, this temporary arena will bring together thousands of spectators amid the iconic backdrop of the Eiffel Tower. After the Games, the Champ de Mars will retain its charm as a cherished gathering space in Paris.",
         "website": "https://www.paris2024.org/en/venue/eiffel-tower-stadium/"
@@ -45,9 +47,160 @@
                 "lng": 2.3136
             }
         },
+        "types": ["olympic-venue"],
         "photo": "images/Alexandre-Bridge.jpeg",
         "content": "Pont Alexandre III, an emblematic bridge in Paris, will take center stage during Paris 2024, serving as a picturesque backdrop for various sporting events. This iconic structure, adorned with golden bronze statues and spanning the Seine, will witness the thrilling finish lines of road cycling, triathlon, marathon swimming, and para triathlon competitions. As it links other key venues like the Grand Palais and Invalides, Pont Alexandre III epitomizes Paris 2024's vision of showcasing sports amidst the city's most beloved landmarks.",
         "website": "https://www.paris2024.org/en/venue/pont-alexandre-iii/"
         
+    },
+    {
+        "name": "Invalides",
+        "geometry": {
+            "location": {
+                "lat": 48.8565,
+                "lng": 2.3127
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/Invalides.jpg",
+        "content": "The Esplanade des Invalides in Paris will host archery and para archery events during Paris 2024, offering a historic backdrop for athletes and spectators. With its capacity for 8,000 people and iconic surroundings including the Hôtel des Invalides and Pont Alexandre III, it promises a unique experience steeped in culture and sportsmanship.",
+        "website": "https://www.paris2024.org/en/venue/invalides/"
+    },
+    {
+        "name": "La Concorde Stadium",
+        "geometry": {
+            "location": {
+                "lat": 48.865608,
+                "lng": 2.321038
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/La-Concorde-Stadium.jpg",
+        "content": "Parc Urbain La Concorde will host skateboarding, BMX freestyle, 3x3 basketball, and breaking events during Paris 2024, embodying the city's vision of urban sports in their natural environment. This innovative venue, situated at the heart of Paris, promises a dynamic fusion of modern sports and urban culture, complemented by a vibrant program of artistic and celebratory events.",
+        "website": "https://www.paris2024.org/en/venue/concorde-urban-park/"
+    },{
+        "name": "Bercy Arena",
+        "geometry": {
+            "location": {
+                "lat": 48.838703,
+                "lng": 2.377946
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/BercyArena.jpg",
+        "content": "Bercy Arena, renowned for its pyramid design, will host basketball and gymnastics events during Paris 2024, maintaining its status as a cultural and sporting hub in Paris.",
+        "website": "https://www.paris2024.org/en/venue/bercy-arena/"
+    },
+    {
+        "name": "Porte de la Chapelle Arena",
+        "geometry": {
+            "location": {
+                "lat": 48.8994,
+                "lng": 2.3605
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/ChapelleArena.jpg",
+        "content": "The Porte de La Chapelle Arena, designed with eco-friendly features, will host badminton, rhythmic gymnastics, para badminton, and para powerlifting events during Paris 2024, embodying a legacy of community engagement and cultural vibrancy beyond the Games.",
+        "website": "https://www.paris2024.org/en/venue/porte-chapelle-arena/"
+        
+    },
+    {
+        "name": "Paris Aquatique Center",
+        "geometry": {
+            "location": {
+                "lat":  48.9236,
+                "lng": 2.3556
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/aquatics.jpeg",
+        "content": "The Aquatics Centre, a sustainable venue in Seine-Saint-Denis for Paris 2024, will host artistic swimming, diving, and water polo events, embodying a legacy of sports excellence and community engagement beyond the Games.",
+        "website": "https://www.paris2024.org/en/venue/aquatics-centre/"
+        
+    },
+    {
+        "name": "Bordeaux Stadium",
+        "geometry": {
+            "location": {
+                "lat":  44.8974,
+                "lng": 0.5616
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/BordeauxStadium.jpg",
+        "content": "Bordeaux Stadium, a striking venue known for its sustainable design and memorable spectator experience, will host football events for Paris 2024, embodying the legacy of sports excellence and entertainment in the heart of France's wine capital.",
+        "website": "https://www.paris2024.org/en/venue/bordeaux-stadium/"
+       
+    },
+    {
+        "name": "Champ de Mars Arena",
+        "geometry": {
+            "location": {
+                "lat":  48.8529,
+                "lng": 2.3028
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/Champ-de-Mars-Arena.webp",
+        "content": "The Champ de Mars Arena, architecturally crafted by Jean-Michel Wilmotte, will be the pulsating heart of Paris 2024, hosting intense judo and wrestling tournaments amidst its sustainable design and rich cultural context, nestled within the iconic Champ de Mars.",
+        "website": "https://www.paris2024.org/en/venue/champ-de-mars-arena/"
+        
+    },
+    {
+        "name": "Château de Versailles",
+        "geometry": {
+            "location": {
+                "lat":  48.804722,
+                "lng": 2.121782
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/Château-de-Versailles.jpg",
+        "content": "The iconic Château de Versailles, symbolizing France's rich heritage, will host a diverse array of Olympic and Paralympic events, including equestrian disciplines like eventing, dressage, and jumping, alongside modern pentathlon competitions, all set against the backdrop of its magnificent gardens and historic splendor.",
+        "website": "https://www.paris2024.org/en/venue/chateau-de-versailles/"
+        
+    },
+    {
+        "name": "Elancourt Hill",
+        "geometry": {
+            "location": {
+                "lat":  48.782907,
+                "lng":  1.960077
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/ElancourtHill.jpeg",
+        "content": "Climbing to an altitude of 231 metres, Elancourt hill is the highest point in the Paris Region. Its summit offers breathtaking views of the Eiffel Tower, La Défense and the forests around Paris. No major infrastructure will be created on site, with a view to minimising any impact on its biodiversity. 95% of the future trails for the Olympic mountain bike events, designed by the South African expert Nick Floros, are based on existing paths.",
+        "website": "https://www.paris2024.org/en/venue/elancourt-hill/"
+    } ,
+    {
+        "name": "Geoffroy-Guichard Stadium",
+        "geometry": {
+            "location": {
+                "lat":  45.4605,
+                "lng":  4.3894
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/ggs.jpeg",
+        "content": "Geoffroy-Guichard Stadium is one of Frances most iconic stadiums, and has been the stage for some of the greatest moments in the history of French football with AS Saint-Etienne, the legendary club. Since it was built in 1931, the “Chaudron” Stadium has been renovated several times to welcome the major sports competitions organised in France in the 20th century. In 2024, it will be welcoming the Olympic Games!",
+        "website": "https://www.paris2024.org/en/venue/geoffroy-guichard-stadium/"
+        
+    } ,
+    {
+        "name": "Grand Palais",
+        "geometry": {
+            "location": {
+                "lat":  48.8661,
+                "lng":  2.3125
+            }
+        },
+        "types": ["olympic-venue"],
+        "photo": "images/grandPalais.jpeg",
+        "content": "The historic Grand Palais, renowned for its stunning architecture, will serve as the prestigious venue for fencing and taekwondo competitions during the Paris 2024 Olympic Games, followed by wheelchair fencing and para taekwondo events in the Paralympic Games, embodying the fusion of sports and culture at the heart of Paris.",
+        "website": "https://www.paris2024.org/en/venue/grand-palais/"
+        
     }
+
 ]

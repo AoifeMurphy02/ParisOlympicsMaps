@@ -267,7 +267,22 @@ function findAndCenterHotel() {
         }
     });
 }
+function translateIntoFrench()
+            {
+                const textToTranslate = encodeURI(document.getElementById('textToTranslate').value)
+                const sourceLang = document.getElementById('sourceLanguage').value;
+                const tranlationLanuage = `fr`
+                
+                const url = `https://translation.googleapis.com/language/translate/v2?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&&q=${textToTranslate}&source=${sourceLang}&target=${tranlationLanuage}`
 
+                fetch(url)
+                        .then(response => response.json())
+                        .then(jsonData => {
+                            document.getElementById('frenchTranslationContainer').style.display = 'block'
+                            document.getElementById('translation').innerHTML = `<input type="text" readonly id="translation" value="${jsonData.data.translations[0].translatedText}"/>`
+
+                        })
+            }
 
     </script>
 </head> 
@@ -328,12 +343,12 @@ function findAndCenterHotel() {
         
         </div>
     </div>
-    
+    <div class="am_underMapContainer">
     <div class="am_dirDiv">
     <h1 id=transport-mode>Driving</h1>
-    </div> 
+    
     <details id=directions><summary>Directions</summary></details>
-
+</div> 
         <!-- Google Maps -->
         <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=places,places></script>       		
         
@@ -350,18 +365,39 @@ function findAndCenterHotel() {
         </select>
         <br/>
         <br/>
-        <input class="am_formInputConversion" type="text" id="amount" placeholder="Enter amount" /> 
+        <input  class="am_formInput" type="text" id="amount" placeholder="Enter amount" /> 
         
         <input class="am_button" type="button" value="Get Conversion" onclick="getConvision()"/>
     <br/>
         <div id="conversionResult"></div>
     </div>
 
+    <div class="am_translate">
+    <h2>Translate into French:</h2>
+    <label for="sourceLanguage">From:</label>
+    <select id="sourceLanguage">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="de">German</option>
+        <option value="fr">French</option>
+        <option value="zh">Chinese</option>
+    </select>
+    <br/>
+    <br/>
+    <label for="textToTranslate">Text:</label>
+    <input class="am_formInput" type="text" id="textToTranslate" onkeyup="document.getElementById('translationContainer').style.display = 'none'"/> 
+   
+    <input class="am_button" type="button" value="Translate" onclick="translateIntoFrench()"/>
+    
+    <div  id="frenchTranslationContainer">    
+        <label>French Translation: </label>
+        <div  id="translation"></div>
+    </div>
+</div>
+</div>
         <div class="am_spaceUnderMap"></div> 
         <div class="am_spaceUnderMap"></div> 
-        <div class="am_spaceUnderMap"></div>
-        <div class="am_spaceUnderMap"></div> 
-        <div class="am_spaceUnderMap"></div>  
+       
         
          
     </body>
