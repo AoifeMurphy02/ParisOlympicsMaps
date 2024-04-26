@@ -9,11 +9,13 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> 
     <script>
+    
         let map = null;
         let placeType = []; // an array to store multiple types
         let markers = [];
         let directionsRenderer = null;
         let hotelMarker = null;
+        fetchWeather();
         function loadMap() {
                 new google.maps.places.Autocomplete(start)
                 new google.maps.places.Autocomplete(end)
@@ -67,7 +69,6 @@
     let start = directions.geocoded_waypoints[0].place_id
     geocoder.geocode({placeId: start}, (results, status) =>
     {
-        // results[0].formatted_address contains the start address
         console.log(results[0].formatted_address)
     })
 
@@ -113,7 +114,7 @@ function loadData() {
     placeType.forEach(type => {
         service.nearbySearch({
             location: location,
-            radius: 1900,  // Adjust radius as necessary
+            radius: 1900, 
             type: type
         }, getNearbyMarkers);
     });
@@ -158,10 +159,22 @@ function loadData() {
             // Handling direct photo URLs from JSON data
             content += `<img src="${place.photo}" width="100px">`;
         }
+        if(place.rating){
+        content += `<p>Rating: ${place.rating}</p>`
+        } 
+        if(place.price_level){
+        content += `<p>Price Level ${place.price_level}</p>`
+        }
+        content += `<p>${place.content || ''}</p>`
+        if(place.website){
+                    `<p>For more information: <a href="${place.website}" target="_blank">Visit Website</a></p>`
+        }
+        if(place.wheelchair_accessible_entrance){
+        `<p>${place.wheelchair_accessible_entrance}</p>`
+        } 
 
-        content += `<p>${place.content || ''}</p>
-                    <p>For more information: <a href="${place.website}" target="_blank">Visit Website</a></p>
-                   </div>`;
+         `</div>`;
+                   
 
         const infoWindow = new google.maps.InfoWindow({
             content: content
@@ -220,14 +233,13 @@ function getIconURL(types) {
             placeType.push(checkbox.value);
         }
     });
-    //clearMarkers();
+   
     performNearbySearch(map.getCenter());
 }
 function findAndCenterHotel() {
     const hotelName = document.getElementById("Hotel").value;
     if (!hotelName) {
-        
-        return;
+       return;
     }
     const service = new google.maps.places.PlacesService(map);
     service.findPlaceFromQuery({
@@ -237,7 +249,6 @@ function findAndCenterHotel() {
         if (status === google.maps.places.PlacesServiceStatus.OK && results[0] && results[0].geometry) {
             const hotelLocation = results[0].geometry.location;
 
-            // Clear the previous hotel marker if it exists
             if (hotelMarker) {
                 hotelMarker.setMap(null);
             }
@@ -249,7 +260,7 @@ function findAndCenterHotel() {
                 title: results[0].name,
             });
 
-            // Optionally open an info window when the hotel marker is clicked
+            // info window when the hotel marker is clicked
             const infoWindow = new google.maps.InfoWindow({
                 content: `<div><strong>${results[0].name}</strong></div>`
             });
@@ -258,12 +269,12 @@ function findAndCenterHotel() {
             });
 
             map.setCenter(hotelLocation);
-            map.setZoom(15);  // Zoom in to the hotel location
+            map.setZoom(15);  
 
-            // Perform search around the new center
+            // nearby search around the new center
             performNearbySearch(hotelLocation);
         } else {
-            alert("Hotel not found. Try a different name.");
+           
         }
     });
 }
@@ -279,10 +290,64 @@ function translateIntoFrench()
                         .then(response => response.json())
                         .then(jsonData => {
                             document.getElementById('frenchTranslationContainer').style.display = 'block'
-                            document.getElementById('translation').innerHTML = `<input type="text" readonly id="translation" value="${jsonData.data.translations[0].translatedText}"/>`
+                            document.getElementById('translation').innerHTML = `<input class="am_formInput" type="text" readonly id="translation" value="${jsonData.data.translations[0].translatedText}"/>`
 
                         })
             }
+            function fetchWeather() {
+    const lat = 48.86; // Latitude for Paris
+    const long = 2.35; // Longitude for Paris
+    const hourlyParams = "temperature_2m"; // Example parameter
+    const url = `https://api.open-meteo.com/v1/meteofrance?latitude=${lat}&longitude=${long}&hourly=${hourlyParams}`;
+
+    fetch(url).then(response => {
+        return response.json();
+    }).then(data => {
+        if (data) {
+            displayWeatherData(data);
+        } else {
+            console.error('No data received');
+        }
+    }).catch(error => {
+        console.error('Failed to fetch weather data:', error);
+    });
+}
+
+function displayWeatherData(data) {
+    const weatherContainer = document.getElementById('am_weatherContainer');
+    if (!data || !data.hourly || !data.hourly.temperature_2m || !data.hourly.time || data.hourly.time.length === 0) {
+        weatherContainer.innerHTML = 'No weather data available';
+        return;
+    }
+
+    // Find current time and match it to the closest hour in the data
+    const currentTime = new Date();
+    const currentHour = currentTime.toISOString().slice(0, 13) + ':00'; // Get current hour in ISO format
+
+    const forecastIndex = data.hourly.time.findIndex(time => time === currentHour);
+    if (forecastIndex === -1) {
+        weatherContainer.innerHTML = 'Current hourly data not available';
+        return;
+    }
+
+    const currentTemperature = data.hourly.temperature_2m[forecastIndex];
+    const forecastTime = data.hourly.time[forecastIndex];
+
+    let readableTime = 'Unavailable';
+    try {
+        const timeObject = new Date(forecastTime);
+        readableTime = timeObject.toLocaleString();  // Converts to a readable local time string
+    } catch (error) {
+        console.error('Error parsing date:', error);
+    }
+
+    const weatherHTML = `<h3>Current Temperature:</h3><p>Time: ${readableTime}<br>Temperature: ${currentTemperature}°C</p>`;
+    
+    weatherContainer.innerHTML = weatherHTML;
+    weatherContainer.style.display = 'block';
+}
+
+
 
     </script>
 </head> 
@@ -313,6 +378,7 @@ function translateIntoFrench()
    
    
 </div>
+
 <div class="am_hotelName">
 <label>Hotel Name:</label>
 <input class="am_formInput" id="Hotel" type="text" />
@@ -325,24 +391,25 @@ function translateIntoFrench()
 
     <div id="am_dirTextInput">
     
-        <span class=select-location-label>Start:</span>
+        <span class=am_selectLocationLabel>Start:</span>
         <input class="am_formInput" id=start type=text><br>
 
         <br>
-        <span class=select-location-label>End:</span>
+        <span class=am_selectLocationLabel>End:</span>
         <input class="am_formInput" id=end type=text>
         <br/>
         <br/>
         <div>
-        <input class="am_button" type=button onclick=calculateRoute() id=submit value=Submit>
-        
+
         <button onclick="calculateRoute('DRIVING')">Car</button>
         <button onclick="calculateRoute('TRANSIT')">Bus</button>
         <button onclick="calculateRoute('CYCLING')">Bike</button>
         <button onclick="calculateRoute('WALKING')">Walk</button>
-        
+        <br/>
+        <input class="am_button" type=button onclick=calculateRoute() id=submit value=Submit>
         </div>
     </div>
+    <div id="am_weatherContainer"></div>
     <div class="am_underMapContainer">
     <div class="am_dirDiv">
     <h1 id=transport-mode>Driving</h1>
@@ -367,7 +434,7 @@ function translateIntoFrench()
         <br/>
         <input  class="am_formInput" type="text" id="amount" placeholder="Enter amount" /> 
         
-        <input class="am_button" type="button" value="Get Conversion" onclick="getConvision()"/>
+        <input class="am_button" type="button" value="Convert" onclick="getConvision()"/>
     <br/>
         <div id="conversionResult"></div>
     </div>
@@ -379,23 +446,24 @@ function translateIntoFrench()
         <option value="en">English</option>
         <option value="es">Spanish</option>
         <option value="de">German</option>
-        <option value="fr">French</option>
         <option value="zh">Chinese</option>
     </select>
     <br/>
     <br/>
     <label for="textToTranslate">Text:</label>
-    <input class="am_formInput" type="text" id="textToTranslate" onkeyup="document.getElementById('translationContainer').style.display = 'none'"/> 
+    <input class="am_formInput" type="text" id="textToTranslate" onkeyup="document.getElementById('translationContainer')"/> 
    
     <input class="am_button" type="button" value="Translate" onclick="translateIntoFrench()"/>
     
     <div  id="frenchTranslationContainer">    
-        <label>French Translation: </label>
-        <div  id="translation"></div>
+       
+        <div id="translation"></div>
     </div>
+   
+
+    
 </div>
 </div>
-        <div class="am_spaceUnderMap"></div> 
         <div class="am_spaceUnderMap"></div> 
        
         

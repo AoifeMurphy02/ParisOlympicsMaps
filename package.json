@@ -1,8 +1,16 @@
 {
     "name": "maps",
     "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
     "author": "aoife",
     "contributors": [],
-    "dependencies": {}
+    "dependencies": {
+        "openmeteo": "^1.1.3"
+    }
 }

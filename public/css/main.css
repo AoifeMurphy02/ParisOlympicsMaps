@@ -11,36 +11,13 @@ body {
 
 .am_conversion, .am_translate, .am_dirDiv {
   flex: 1 1 30%;
-  /* Each takes up roughly a third of the space, shrinking and growing as needed */
   margin: 10px;
   box-sizing: border-box;
-  /* Includes padding and border in the element's total width and height */
   padding: 20px;
   text-align: center;
   min-width: 250px;
   /* Minimum width so items don't become too narrow */ }
 
-/**.am_conversion{
-    margin: auto;
-    padding: 10px;
-    align-items: center;
-    text-align: center;
-   // border: 1px solid $red;
-    width: 25%;
-    height: 25%;
-    
-
-}
-.am_translate{
-    text-align: center;
-}
-.am_formInputConversion{
-    background-color: white;
-    border-radius: 20px;
-    padding: 5px 10px;
-    border: 1px solid $blue;
-    width: 25%;
-}*/
 .am_header {
   position: relative;
   height: 350px; }
@@ -113,12 +90,22 @@ body {
     transform: translateX(100%); } }
 #am_dirTextInput {
   position: absolute;
-  top: 950px;
+  top: 930px;
   left: 160px;
   z-index: 20;
   background-color: white;
   padding: 5px;
   border: thin solid #4d43c0; }
+
+#frenchTranslationContainer {
+  display: none; }
+
+#translation {
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #4d43c0;
+  border-radius: 20px;
+  width: 70%; }
 
 #am_content {
   width: 300px;
@@ -184,7 +171,7 @@ body {
 
   .am_hotelName {
     padding-top: 5px;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     padding-bottom: 5px;
     justify-content: center;
@@ -192,21 +179,40 @@ body {
     padding-right: 0px; }
 
   #am_dirTextInput {
-    position: absolute;
-    top: 880px;
-    left: 100px;
+    position: relative;
+    top: 10px;
+    left: 0px;
     align-items: center;
+    width: 50%;
     left: 50%;
     transform: translateX(-50%);
     background-color: white;
     padding: 5px; }
 
+  .am_conversion, .am_translate, .am_dirDiv {
+    flex: 1 1 30%;
+    margin: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    min-width: 250px; }
+
+  .am_button {
+    width: 35%;
+    margin: auto;
+    text-align: center; }
+
+  .am_formInput {
+    width: 60%;
+    margin: auto;
+    /* Centering the button */ }
+
   .am_footer {
     visibility: hidden; }
 
   #am_content {
-    width: 100%;
-    max-width: 300px;
+    width: 80%;
+    max-width: 200px;
     margin: 0 auto; }
 
   #am_content img {
