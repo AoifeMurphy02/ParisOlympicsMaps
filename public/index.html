@@ -4,10 +4,15 @@
     <title>Paris Olympic Games Maps</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="css/main.css">
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> 
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
     <script>
     
         let map = null;
@@ -47,7 +52,13 @@
                 let start = document.getElementById("start").value
                 let end = document.getElementById("end").value
                 let waypointInput = document.getElementById("waypoint").value;
-                let waypoints = waypointInput.split(',').map(location => ({ location: location.trim() })); // Parse and trim each waypoint
+                let waypoints = [];
+
+            //if there are any waypoints provided, and process them if they exist
+            if (waypointInput.trim() !== "") {
+                waypoints = waypointInput.split(',').filter(wp => wp.trim() !== "") // Filter out any empty strings just in case
+                .map(location => ({ location: location.trim() })); // Trim whitespace and format 
+                }
                 waypoints: waypoints
                 let waypointCheckboxes = document.querySelectorAll('input[type="checkbox"][name="waypoint"]');
                 waypointCheckboxes.forEach(waypoint =>
