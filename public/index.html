@@ -20,6 +20,7 @@
                 new google.maps.places.Autocomplete(start)
                 new google.maps.places.Autocomplete(end)
                 new google.maps.places.Autocomplete(Hotel)
+                new google.maps.places.Autocomplete(waypoint)
                
 
             map = new google.maps.Map(document.getElementById("map"), {
@@ -45,9 +46,22 @@
                 document.getElementById("transport-mode").innerHTML = travelMode
                 let start = document.getElementById("start").value
                 let end = document.getElementById("end").value
+                let waypointInput = document.getElementById("waypoint").value;
+                let waypoints = waypointInput.split(',').map(location => ({ location: location.trim() })); // Parse and trim each waypoint
+                waypoints: waypoints
+                let waypointCheckboxes = document.querySelectorAll('input[type="checkbox"][name="waypoint"]');
+                waypointCheckboxes.forEach(waypoint =>
+                {
+                    if (waypoint.checked)
+                    {
+                        waypoints.push({location: waypoint.value})
+                    }
+                })
+                console.log(waypoints)
 
                 let request = {origin: start,
                     destination: end,
+                    waypoints: waypoints,
                     travelMode: travelMode}
 
                 directionsService = new google.maps.DirectionsService()
@@ -341,13 +355,11 @@ function displayWeatherData(data) {
         console.error('Error parsing date:', error);
     }
 
-    const weatherHTML = `<h3>Current Temperature:</h3><p>Time: ${readableTime}<br>Temperature: ${currentTemperature}°C</p>`;
+    const weatherHTML = `<p>Current Temperature: ${currentTemperature}°C</p>`;
     
     weatherContainer.innerHTML = weatherHTML;
     weatherContainer.style.display = 'block';
 }
-
-
 
     </script>
 </head> 
@@ -376,15 +388,17 @@ function displayWeatherData(data) {
     <label for="restaurant">Restaurants:</label>
     <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
    
-   
-</div>
+   </div>
+   <div class="am_container">
 
+   <div id="am_weatherContainer"></div>
 <div class="am_hotelName">
 <label>Hotel Name:</label>
 <input class="am_formInput" id="Hotel" type="text" />
 <button class="am_button" onclick="findAndCenterHotel()">Search</button>
 </div>  
 
+</div>
 <div class="am_space"></div> 
 
     <div class="am_map" id=map></div> 
@@ -393,10 +407,13 @@ function displayWeatherData(data) {
     
         <span class=am_selectLocationLabel>Start:</span>
         <input class="am_formInput" id=start type=text><br>
-
         <br>
         <span class=am_selectLocationLabel>End:</span>
         <input class="am_formInput" id=end type=text>
+        <br/>
+        <br/>
+        <span class=am_waypointLocationLabel>Via: </span>
+        <input class="am_formInput" type="text" id="waypoint" placeholder="Enter waypoints">
         <br/>
         <br/>
         <div>
@@ -409,7 +426,7 @@ function displayWeatherData(data) {
         <input class="am_button" type=button onclick=calculateRoute() id=submit value=Submit>
         </div>
     </div>
-    <div id="am_weatherContainer"></div>
+   
     <div class="am_underMapContainer">
     <div class="am_dirDiv">
     <h1 id=transport-mode>Driving</h1>
