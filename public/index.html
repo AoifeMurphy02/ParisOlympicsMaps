@@ -144,8 +144,6 @@ function loadData() {
         }, getNearbyMarkers);
     });
 }
-
-
         function getNearbyMarkers(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 results.forEach(result => {
@@ -395,9 +393,9 @@ function displayWeatherData(data) {
     <label for="museum">Museums:</label>
     <input name="placeType" id="museum" type="checkbox" value="museum" onclick="switchPlaceType();" />
     <label for="bar">Bars:</label>
-    <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();" />
+    <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();"/>
     <label for="restaurant">Restaurants:</label>
-    <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();" />
+    <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();"/>
    
    </div>
    <div class="am_container">
@@ -429,10 +427,12 @@ function displayWeatherData(data) {
         <br/>
         <div>
 
-        <button onclick="calculateRoute('DRIVING')">Car</button>
-        <button onclick="calculateRoute('TRANSIT')">Bus</button>
-        <button onclick="calculateRoute('CYCLING')">Bike</button>
-        <button onclick="calculateRoute('WALKING')">Walk</button>
+            <button onclick="calculateRoute('DRIVING')">
+                <img src="icons/driving.png" alt="Driving">
+            </button>
+        <button onclick="calculateRoute('TRANSIT')">  <img src="icons/transit.png" alt="Driving"></button>
+        <button onclick="calculateRoute('CYCLING')"><img src="icons/bike.png" alt="bike"></button>
+        <button onclick="calculateRoute('WALKING')"><img src="icons/walk.png" alt="walk"></button>
         <br/>
         <input class="am_button" type=button onclick=calculateRoute() id=submit value=Submit>
         </div>
@@ -497,5 +497,5 @@ function displayWeatherData(data) {
         
          
     </body>
-    <am_ class="am_footer"><p>&copy; Paris Olympic Games</p></am_>
+    <am_ class="am_footer"><p>&copy; Paris Olympic Games 2024</p></am_>
 </html> 
