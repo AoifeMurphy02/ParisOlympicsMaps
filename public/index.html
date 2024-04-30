@@ -243,6 +243,12 @@ function getIconURL(types) {
     if (types.includes('restaurant')) {
         return 'http://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png';
     }
+    if(types.includes('bakery')){
+        return 'https://png.pngtree.com/png-vector/20190628/ourmid/pngtree-bakery-icon-for-your-project-png-image_1520008.jpg';
+    }
+    if(types.includes('pharmacy')){
+        return 'https://banner2.cleanpng.com/20210203/kxu/transparent-public-services-icon-pharmacy-icon-dispensary-icon-601b33e8887a76.402989061612395496559.jpg';
+    }
     // default icon if no place type matches
     return 'https://discover.sportsengineplay.com/sites/default/files/images/Main%20Logo.png';
 }
@@ -324,6 +330,7 @@ function findAndCenterHotel() {
         }
     });
 }
+
 function translateIntoFrench()
             {
                 const textToTranslate = encodeURI(document.getElementById('textToTranslate').value)
@@ -419,6 +426,10 @@ function displayWeatherData(data) {
     <input name="placeType" id="bar" type="checkbox" value="bar" onclick="switchPlaceType();"/>
     <label for="restaurant">Restaurants:</label>
     <input name="placeType" id="restaurant" type="checkbox" value="restaurant" onclick="switchPlaceType();"/>
+    <label for="bakery">Bakery:</label>
+    <input name="placeType" id="bakery" type="checkbox" value="bakery" onclick="switchPlaceType();"/>
+    <label for="pharmacy">Pharmacy:</label>
+    <input name="placeType" id="pharmacy" type="checkbox" value="pharmacy" onclick="switchPlaceType();"/>
    
    </div>
    <div class="am_container">
@@ -460,13 +471,20 @@ function displayWeatherData(data) {
         <input class="am_button" type=button onclick=calculateRoute() id=submit value=Submit>
         </div>
     </div>
+    <br/>
+   
+    
+
+       
    
     <div class="am_underMapContainer">
-    <div class="am_dirDiv">
-    <h1 id=transport-mode>Driving</h1>
+        <iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/9NVOff8EcP8?si=_tS-kULGYvyw4NwO" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
     
-    <details id=directions><summary>Directions</summary></details>
-</div> 
         <!-- Google Maps -->
         <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyA4llQ0ieeGsUKEsQEYe1v-0-TpRRQy80U&loading=async&callback=loadMap&libraries=places,places></script>       		
         
@@ -514,11 +532,14 @@ function displayWeatherData(data) {
 
     
 </div>
+<div class="am_dirDiv">
+    <h1 id=transport-mode>Driving</h1>
+    
+    <details id=directions><summary>Directions</summary></details>
+</div> 
 </div>
         <div class="am_spaceUnderMap"></div> 
-       
-        
-         
+    
     </body>
     <footer class="am_footer"><p>&copy; Paris Olympic Games 2024</p></footer>
 </html> 

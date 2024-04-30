@@ -11,7 +11,6 @@ body {
     font-style: normal;
 }
 
-  
 .am_underMapContainer {
     display: flex;
     justify-content: space-around;
@@ -19,6 +18,7 @@ body {
     padding: 20px 10px;
     flex-wrap: wrap; 
 }
+
 button img {
     width: 20px; 
     height: auto; 
@@ -103,7 +103,7 @@ button {
 .am_formInput{
     background-color: white;
     border-radius: 20px;
-    width: 50%;
+    width: 30%;
     padding: 5px 10px;
     border: 1px solid $blue;
 }
@@ -229,6 +229,10 @@ button {
         margin: 0 auto;
 
     }
+    .am_youtube{
+       visibility: none;
+      
+       }
     .am_checkbox{
         padding-top: 10px;
         flex-direction: row;

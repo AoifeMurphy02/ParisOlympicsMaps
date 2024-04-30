@@ -86,7 +86,7 @@ button {
 .am_formInput {
   background-color: white;
   border-radius: 20px;
-  width: 50%;
+  width: 30%;
   padding: 5px 10px;
   border: 1px solid #4d43c0; }
 
@@ -183,6 +183,9 @@ button {
     width: 90%;
     height: 600px;
     margin: 0 auto; }
+
+  .am_youtube {
+    visibility: none; }
 
   .am_checkbox {
     padding-top: 10px;
